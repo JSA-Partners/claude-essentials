@@ -94,6 +94,7 @@ Plugins enabled in [`settings.json`](settings.json):
 
 - [Astral](https://github.com/astral-sh/claude-code-plugins) by Astral
 - [Claude HUD](https://github.com/jarrodwatts/claude-hud) by Jarrod Watts
+- [Code Review](https://github.com/anthropics/claude-plugins-official) by Anthropic
 - [Compound Engineering](https://github.com/EveryInc/compound-engineering-plugin) by Every
 - [Gopls LSP](https://github.com/anthropics/claude-plugins-official) by Anthropic
 - [Impeccable](https://github.com/pbakaus/impeccable) by Paul Bakaus
