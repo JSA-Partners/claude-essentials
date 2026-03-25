@@ -45,5 +45,7 @@ When implementation and tests pass, end with:
 
 ```markdown
 ## Next Step
-Ready to proceed with `/review`.
+Ready to proceed with `/review`. Unit scope: `<path-to-unit-file>`
 ```
+
+Include the unit file path so `/review` can read it for scope boundaries.

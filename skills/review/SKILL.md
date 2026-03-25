@@ -28,6 +28,10 @@ Systematic code review using specialized agents in parallel, with skeptical veri
 
 If scope > 10 files, use `AskUserQuestion`: "Found [N] files. Review all or focus on specific areas?"
 
+### Unit-Scoped Review
+
+If the changes were produced by `/implement` from a decomposed unit file, read the unit file to establish scope boundaries. Pass the unit's **Scope > IN**, **Scope > OUT**, and **Acceptance Criteria** sections to the `scope-reviewer` agent. The scope-reviewer must only check the unit's acceptance criteria, not the full parent story. Work belonging to other units is intentionally deferred and must not be flagged.
+
 ### Phase 2: Parallel Review
 
 Run these 5 agents **in parallel** on identified changes:
