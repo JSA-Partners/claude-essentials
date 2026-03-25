@@ -13,19 +13,27 @@
 
 ### Install
 
-Copy or symlink to [`~/.claude/` (user-scoped) or `.claude/` (project-scoped)](https://code.claude.com/docs/en/settings#available-scopes). Symlinking individual files instead of directories lets you combine multiple libraries alongside your own custom agents, commands, and skills. Updates pull in automatically with `git pull`.
+Symlinks individual files into [`~/.claude/`](https://code.claude.com/docs/en/settings#available-scopes) so you can add your own agents, commands, and skills alongside. Re-run after `git pull` to pick up additions and clean up removals.
 
 ```bash
-# Copy everything
-cp settings.json ~/.claude/
-cp -r agents commands skills ~/.claude/
+./install.sh
+```
 
-# Or symlink to stay in sync
-mkdir -p ~/.claude/agents ~/.claude/commands ~/.claude/skills
-ln -sf $(pwd)/settings.json ~/.claude/settings.json
-ln -sf $(pwd)/agents/* ~/.claude/agents/
-ln -sf $(pwd)/commands/* ~/.claude/commands/
-ln -sf $(pwd)/skills/* ~/.claude/skills/
+## Workflow
+
+One story becomes one PR. `/brainstorm` drafts a user story, `/decompose` breaks it into single-commit units, then each unit loops through `/implement`, `/review`, `/document`, `/commit`. When all units are committed, `/pr` ships the story. Every step is human-gated.
+
+```mermaid
+flowchart LR
+    A("/brainstorm") --> B("/decompose")
+
+    subgraph unit ["for each unit"]
+        C("/implement") --> D("/review") --> E("/document") --> F("/commit")
+        F -- next unit --> C
+    end
+
+    B --> C
+    F --> G("/pr")
 ```
 
 ## What's Included
@@ -49,32 +57,29 @@ ln -sf $(pwd)/skills/* ~/.claude/skills/
 
 | Command | Purpose |
 | ------- | ------- |
+| `/brainstorm` | Brainstorm and create user stories through agent collaboration. |
 | `/commit` | Generate conventional commit messages matching project patterns. |
-| `/complexity-review` | Review code changes for complexity violations. |
-| `/create-story` | Interactive user story creation using agent collaboration. |
-| `/decompose-story` | Decompose a user story into dependency-ordered implementation plans. |
-| `/go-implement` | Implement a Go user story with idiomatic patterns and quality gates. |
-| `/go-review` | Review Go code with parallel specialized agents and adversarial verification. |
-| `/meta-optimize` | Update the optimize-claude command with new resources. |
+| `/decompose` | Decompose a plan or user story into single-commit implementation units. |
+| `/document` | Capture learnings from implementation into docs/claude, memories, or CLAUDE.md. |
+| `/implement` | Implement one decomposed unit with idiomatic patterns and quality gates. Auto-detects Go or Svelte. |
+| `/meta` | Update the /sharpen command with new resources. |
 | `/openapi` | Generate or update OpenAPI 3.1.1 specification from codebase analysis. |
-| `/optimize-claude` | Systematically improve commands, skills, and agents. |
+| `/playbook` | Inject behavioral plays and execution protocols. |
 | `/pr` | Create a GitHub PR with conventional commit title. |
-| `/svelte-implement` | Implement a Svelte/SvelteKit user story with idiomatic patterns. |
-| `/svelte-review` | Review Svelte/SvelteKit code with parallel agents. |
-| `/write-bdd` | Write BDD comments in test files using Given-When-Then format. |
+| `/review` | Review code with parallel specialized agents, adversarial verification, and human approval. |
+| `/sharpen` | Systematically improve dotclaude commands, skills, and agents. |
 
 ### Skills
 
 | Skill | Purpose |
 | ----- | ------- |
 | `bdd-comments` | BDD comment patterns and examples for test files. |
-| `implementation-workflow` | Shared phased implementation workflow for language-specific commands. |
+| `decompose` | Decomposition rules, research protocol, and evaluation checklist. |
+| `implement` | Phased implementation workflow with idiom enforcement and quality gates. |
 | `openapi` | OpenAPI 3.1.1 reference, language-specific patterns, and examples. |
-| `prompt-engineer` | Quality checklists and structural patterns for Claude Code artifacts. |
-| `review-workflow` | Shared parallel review orchestration with adversarial verification. |
+| `review` | Parallel review orchestration with adversarial verification. |
+| `sharpen` | Quality checklists and structural patterns for Claude Code artifacts. |
 | `story-drafter` | Story templates, personas, and acceptance criteria patterns. |
-| `story-planner` | Decomposition rules, plan templates, and research protocols. |
-| `svelte-testing` | Svelte 5 testing patterns with vitest-browser-svelte and SSR testing. |
 
 ## Resources
 
@@ -95,7 +100,6 @@ Plugins enabled in [`settings.json`](settings.json):
 - [Astral](https://github.com/astral-sh/claude-code-plugins) by Astral
 - [Claude HUD](https://github.com/jarrodwatts/claude-hud) by Jarrod Watts
 - [Code Review](https://github.com/anthropics/claude-plugins-official) by Anthropic
-- [Compound Engineering](https://github.com/EveryInc/compound-engineering-plugin) by Every
 - [Gopls LSP](https://github.com/anthropics/claude-plugins-official) by Anthropic
 - [Impeccable](https://github.com/pbakaus/impeccable) by Paul Bakaus
 - [TypeScript LSP](https://github.com/anthropics/claude-plugins-official) by Anthropic
