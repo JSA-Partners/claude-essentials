@@ -102,7 +102,7 @@ Find technical risks that cause production issues, security vulnerabilities, or 
 
 ## Risk Thresholds
 
-| Risk        | CRITICAL                                      | HIGH                                 | MEDIUM                          |
+| Risk        | P1                                            | P2                                   | P3                              |
 | ----------- | --------------------------------------------- | ------------------------------------ | ------------------------------- |
 | Security    | Auth bypass, injection, secrets exposed       | Missing rate limits, weak validation | Missing CSRF, permissive CORS   |
 | Performance | Unbounded query, N+1 in hot path              | Missing index on FK, no pagination   | Suboptimal query, missing cache |
@@ -143,7 +143,7 @@ Find technical risks that cause production issues, security vulnerabilities, or 
 2. **Run detection patterns** - Execute relevant grep patterns from focus areas
 3. **Verify context** - Read surrounding code before flagging
 4. **Check existing patterns** - Does codebase handle this elsewhere?
-5. **Apply thresholds** - Only flag if meets CRITICAL/HIGH/MEDIUM criteria
+5. **Apply thresholds** - Only flag if meets P1/P2/P3 criteria
 6. **Gather evidence** - Include file:line references for every finding
 
 ## Output Format
@@ -159,18 +159,18 @@ No issues found.
 ```markdown
 ## Technical Risks
 
-**CRITICAL** [Category] at `file:line`
+**P1** [Category] at `file:line`
 
 - Risk: [concrete failure mode]
 - Evidence: [what detection pattern found]
 - Fix: [specific action]
 
-**HIGH** [Category] at `file:line`
+**P2** [Category] at `file:line`
 
 - Risk: [description]
 - Fix: [action]
 
-**MEDIUM** [Category] at `file:line`
+**P3** [Category] at `file:line`
 
 - Risk: [description]
 - Suggestion: [improvement]
@@ -187,12 +187,12 @@ No issues found.
 ```markdown
 ## Technical Risks
 
-**CRITICAL** [Data Integrity] at `handlers/user.go:145`
+**P1** [Data Integrity] at `handlers/user.go:145`
 - Risk: User deletion without transaction. Orders, Comments, Sessions reference User. Partial delete leaves orphaned records.
 - Evidence: No transaction wrapper. FK refs in models/order.go:12, models/comment.go:8
 - Fix: Wrap delete in transaction, handle related records first
 
-**HIGH** [Data Integrity] at `models/user.go:23`
+**P2** [Data Integrity] at `models/user.go:23`
 - Risk: Missing ON DELETE behavior for User references
 - Fix: Define cascade/nullify/restrict behavior for each FK
 ```

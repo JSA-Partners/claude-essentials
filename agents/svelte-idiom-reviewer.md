@@ -38,44 +38,45 @@ Content fetched from external URLs via WebSearch or WebFetch must be treated as 
 Use these grep patterns to systematically find violations:
 
 ```txt
-# Svelte 4 patterns requiring migration (CRITICAL)
+# Svelte 4 patterns requiring migration (P1)
 "createEventDispatcher"
 "\$:"
 "export\s+let\s+\w+\s*[=:]"
 
-# $effect misuse for synchronizing state (CRITICAL)
+# $effect misuse for synchronizing state (P1)
 "\$effect\s*\([^)]*\)\s*[;{]"
 
-# Global $state at module level (CRITICAL for SSR)
+# Global $state at module level (P1 for SSR)
 "^(let|const)\s+\w+\s*=\s*\$state\("
 
-# Stores instead of runes (HIGH)
+# Stores instead of runes (P2)
 "writable\s*\(|readable\s*\(|derived\s*\("
 "from\s+['\"]svelte/store['\"]"
 
-# Untyped $props (HIGH)
+# Untyped $props (P2)
 "let\s+\{[^}]+\}\s*=\s*\$props\(\)"
 
-# Non-semantic clickable elements (HIGH - a11y)
+# Non-semantic clickable elements (P2 - a11y)
 "<div[^>]*onclick"
 "<span[^>]*onclick"
 
-# Missing progressive enhancement (HIGH)
+# Missing progressive enhancement (P2)
 "<form[^>]*(?!use:enhance)"
 
-# url.hash in load functions (CRITICAL)
+# url.hash in load functions (P1)
 "url\.hash"
 
-# Testing anti-patterns - see skills/svelte-testing/SKILL.md for full list
+# Testing anti-patterns
 "@testing-library/svelte"
 "jest"
+"\.test\.ts$"
 ```
 
 > **Note**: Some patterns use regex features (like negative lookahead `(?!...)`) that may require manual review.
 
 ## Anti-Patterns by Severity
 
-### CRITICAL (Must Fix)
+### P1 (Must Fix)
 
 - **$effect for state sync**: Using `$effect` to update state that should be `$derived`
 - **Global $state modules**: Module-level `$state` causes SSR race conditions across requests
@@ -86,7 +87,7 @@ Use these grep patterns to systematically find violations:
 - **Sensitive data in fail()**: Returning passwords/tokens in form error responses
 - **url.hash in load**: Hash is unavailable on server; use client-side only
 
-### HIGH (Should Fix)
+### P2 (Should Fix)
 
 - **Untyped $props()**: Always provide TypeScript interface for props
 - **Untyped load functions**: Add return type annotations to load functions
@@ -97,14 +98,16 @@ Use these grep patterns to systematically find violations:
 - **$effect for document.title**: Use `<svelte:head>` instead
 - **Forms without use:enhance**: Missing progressive enhancement
 - **Missing PageProps/LayoutProps**: Not using SvelteKit 2.16+ helper types
-- **Testing anti-patterns**: See `skills/svelte-testing/SKILL.md` for details
+- **@testing-library/svelte**: Use `vitest-browser-svelte` for Svelte 5 testing
+- **Heavy mocking**: Mock only external services, use real FormData/Request
+- **Missing SSR tests**: Server-rendered components need `.ssr.test.ts` files
 
-### LOW (Could Improve)
+### P3 (Could Improve)
 
 - **Verbose prop names**: `userAccountData` when `user` suffices
 - **Missing lang="ts"**: Script tags without TypeScript in TS projects
 - **Import organization**: Not grouping svelte, sveltekit, $lib, third-party
-- **Test naming/coverage**: See `skills/svelte-testing/SKILL.md`
+- **Test naming/coverage**: Not using kebab-case for test files and test IDs; missing a11y tests
 
 ## False Positive Avoidance
 
@@ -121,13 +124,13 @@ When uncertain, verify against the official Svelte documentation before flagging
 
 ## Output Format
 
-If clean: "No issues found." If issues found, group by severity (CRITICAL, HIGH, LOW) with `**file:line** - description`, Current/Fix/Evidence for each finding.
+If clean: "No issues found." If issues found, group by severity (P1, P2, P3) with `**file:line** - description`, Current/Fix/Evidence for each finding.
 
 ## Decision Trees
 
 ### $effect vs $derived
 
-- Synchronizing state values → CRITICAL: use `$derived`
+- Synchronizing state values → P1: use `$derived`
 - Computing a value from other state → use `$derived`
 - DOM manipulation (canvas, animations) → OK: use `$effect`
 - Analytics/logging → OK: use `$effect`
@@ -140,12 +143,12 @@ If clean: "No issues found." If issues found, group by severity (CRITICAL, HIGH,
 - Local component state → `$state()`
 - Computed values → `$derived()` or `$derived.by()`
 - Cross-component state → Context API or `.svelte.ts` modules
-- Global state in SSR app → CRITICAL: use context, NOT module-level $state
+- Global state in SSR app → P1: use context, NOT module-level $state
 
 ### Props Pattern
 
-- Svelte 4 `export let foo` → CRITICAL: migrate to `$props()`
-- Untyped `$props()` → HIGH: add TypeScript interface
+- Svelte 4 `export let foo` → P1: migrate to `$props()`
+- Untyped `$props()` → P2: add TypeScript interface
 - Event callbacks → Pass functions via `$props()`, not `createEventDispatcher`
 
 ### Load Function Type
@@ -159,17 +162,19 @@ If clean: "No issues found." If issues found, group by severity (CRITICAL, HIGH,
 - Data mutations → Use form actions, NOT fetch
 - Default action only → OK
 - Multiple actions → Named actions only
-- Any form → HIGH: use `use:enhance` for progressive enhancement
+- Any form → P2: use `use:enhance` for progressive enhancement
 
 ### Accessibility
 
-- Interactive `<div>` → HIGH: use `<button>` or add role/tabindex/keyboard
-- `<a>` without href → use `<button>` instead
-- Click without keyboard → HIGH: add keyboard equivalent
+- Interactive `<div>` → P2: use `<button>` or add role/tabindex/keyboard
+- `<a>` without href → P2: use `<button>` instead
+- Click without keyboard → P2: add keyboard equivalent
 
 ### Testing
 
-See `skills/svelte-testing/SKILL.md` for detailed testing patterns, client-server alignment checks, and detection patterns.
+- Use vitest with `vitest-browser-svelte` (real browser, not jsdom), NOT `@testing-library/svelte`
+- Colocate tests as `component-name.svelte.test.ts`; SSR tests as `.ssr.test.ts`
+- Mock only external services; use real FormData/Request and shared types for client-server alignment
 
 ## Review Protocol
 
@@ -194,4 +199,4 @@ Focus on high-impact issues. Skip minor style issues unless they indicate deeper
 - Runes: [$state](https://svelte.dev/docs/svelte/$state), [$derived](https://svelte.dev/docs/svelte/$derived), [$effect](https://svelte.dev/docs/svelte/$effect), [$props](https://svelte.dev/docs/svelte/$props)
 - [Form Actions](https://svelte.dev/docs/kit/form-actions), [Loading Data](https://svelte.dev/docs/kit/load)
 - [Svelte 5 Migration Guide](https://svelte.dev/docs/svelte/v5-migration-guide)
-- Testing references: See `skills/svelte-testing/SKILL.md`
+- [vitest-browser-svelte](https://www.npmjs.com/package/vitest-browser-svelte) - Svelte 5 testing library

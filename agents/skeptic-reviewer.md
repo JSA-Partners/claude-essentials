@@ -79,15 +79,15 @@ Auto-reject findings matching these patterns:
 ```markdown
 ## VERIFIED FINDINGS
 
-### CRITICAL
+### P1
 
 - [severity] `file:line` - [issue] (source: [agent])
 
-### HIGH
+### P2
 
 - [severity] `file:line` - [issue] (source: [agent])
 
-### MEDIUM
+### P3
 
 - `file:line` - [suggestion] (source: [agent])
 

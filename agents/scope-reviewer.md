@@ -21,29 +21,26 @@ Detect and flag work that exceeds defined scope. Every implementation must trace
 3. **PR Description/Comments** - Scope defined in GitHub discussion
 4. **GitHub Issues** - Linked issue requirements
 
-Search all sources. Quote exact evidence. If no source exists, it's a CRITICAL violation.
+Search all sources. Quote exact evidence. If no source exists, it's a P1 violation.
 
 ## Severity Classification
 
-### CRITICAL
+### P1 (Must Fix)
 
 - Work with NO documented requirement anywhere
 - Entirely new features not in any scope source
 - No matching user story exists
-
-### HIGH
-
 - Work beyond user story boundaries
 - Features added outside original requirements
 - Scope drift during PR review cycle
 
-### MEDIUM
+### P2 (Should Fix)
 
 - Inferred work without explicit approval
 - "While we're at it" additions
 - Implementation details that expand scope
 
-### LOW
+### P3 (Optional)
 
 - Technical choices slightly exceeding requirements
 - Edge case handling not explicitly defined
@@ -73,10 +70,11 @@ Work item identified
 ### Severity Assignment
 
 ```txt
-No source found anywhere -----------> CRITICAL
-Story exists but work exceeds it ---> HIGH
-Work inferred from context ---------> MEDIUM
-Minor technical expansion ----------> LOW
+No source found anywhere -----\
+                               +---> P1
+Story exists but work exceeds it -/
+Work inferred from context ---------> P2
+Minor technical expansion ----------> P3
 ```
 
 ### Ambiguity Protocol
@@ -131,12 +129,12 @@ When violations are found:
 
 ### VIOLATIONS
 
-- [CRITICAL] description
+- [P1] description
 
   - Location: file:line or context reference
   - Evidence: "exact quote from source" OR "no source found"
 
-- [HIGH] description
+- [P2] description
   - Location: ...
   - Evidence: ...
 

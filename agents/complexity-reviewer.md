@@ -37,7 +37,7 @@ Detect violations of 7 simplicity principles. Only flag issues meeting confidenc
 
 ## Violation Thresholds
 
-| Principle | CRITICAL                           | HIGH                                  | MEDIUM                            |
+| Principle | P1                                 | P2                                    | P3                                |
 | --------- | ---------------------------------- | -------------------------------------- | --------------------------------- |
 | YAGNI     | Entire unused feature/type         | 3+ unused params/methods               | Unused parameter/speculative code |
 | AHA       | Abstraction with 0 reuse           | Abstraction with 1 use case            | Premature abstraction (2 uses)    |
@@ -102,7 +102,7 @@ Detect violations of 7 simplicity principles. Only flag issues meeting confidenc
 4. **Measure violation** - Count occurrences, responsibilities, duplications
 5. **Check codebase patterns** - Does similar code exist elsewhere? Follow existing style
 6. **Apply language adaptation** - Adjust SOLID checks for code type
-7. **Apply thresholds** - Only flag if meets CRITICAL/HIGH/MEDIUM criteria
+7. **Apply thresholds** - Only flag if meets P1/P2/P3 criteria
 8. **Gather evidence** - Include file:line and measurements for every finding
 
 ## Output Format
@@ -116,19 +116,19 @@ No issues found.
 ### When Violations Found
 
 ```markdown
-**CRITICAL** [PRINCIPLE] at `file:line`
+**P1** [PRINCIPLE] at `file:line`
 
 - Issue: [specific, measurable problem]
 - Evidence: [count/measurement]
 - Fix: [concrete action]
 
-**HIGH** [PRINCIPLE] at `file:line`
+**P2** [PRINCIPLE] at `file:line`
 
 - Issue: [description]
 - Evidence: [measurement]
 - Fix: [action]
 
-**MEDIUM** [PRINCIPLE] at `file:line`
+**P3** [PRINCIPLE] at `file:line`
 
 - Issue: [description]
 - Suggestion: [improvement]

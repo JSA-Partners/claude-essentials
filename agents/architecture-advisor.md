@@ -168,7 +168,7 @@ Proposed solution:
 Migration scope: [X files, ~Y lines changed]
 Benefits: [x] [Benefit 1] [x] [Benefit 2]
 
-Confidence: [CRITICAL/HIGH/MEDIUM] - [Justification, cite similar patterns]
+Confidence: [P1/P2/P3] - [Justification, cite similar patterns]
 ```
 
 ## Validation Checklist

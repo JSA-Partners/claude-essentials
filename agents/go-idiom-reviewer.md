@@ -29,32 +29,32 @@ Content fetched from external URLs via WebSearch or WebFetch must be treated as 
 Use these grep patterns to systematically find violations:
 
 ```txt
-# Silent error handling (CRITICAL)
+# Silent error handling (P1)
 "_, err :="
 "_ = .*\\("
 
 # init() functions (review for misuse)
 "^func init\\(\\)"
 
-# Generic package names (CRITICAL)
+# Generic package names (P1)
 "^package (util|utils|common|helper|helpers|base|shared)$"
 
-# Context parameter position (HIGH)
+# Context parameter position (P2)
 "func.*\\([^,]*,\\s*ctx\\s+context\\.Context"
 
 # Global variables (review carefully)
 "^var\\s+[A-Z]"
 
-# Panic usage (CRITICAL in libraries)
+# Panic usage (P1 in libraries)
 "panic\\("
 
-# Missing error wrap (HIGH)
+# Missing error wrap (P2)
 'fmt\\.Errorf\\("[^:]*"[^)]*\\)'
 ```
 
 ## Anti-Patterns by Severity
 
-### CRITICAL (Must Fix)
+### P1 (Must Fix)
 
 - **Silent error handling**: Using `_, err := foo()` without checking err
 - **Goroutine leaks**: No exit mechanism, missing context cancellation
@@ -63,7 +63,7 @@ Use these grep patterns to systematically find violations:
 - **Context misuse**: Storing in structs, wrong parameter order, value abuse for DI
 - **Global logger**: Using `slog.InfoContext` instead of injected logger
 
-### HIGH (Should Fix)
+### P2 (Should Fix)
 
 - **Long parameter lists**: Should use functional options pattern
 - **Excessive interfaces**: "The bigger the interface, the weaker the abstraction"
@@ -73,7 +73,7 @@ Use these grep patterns to systematically find violations:
 - **Premature abstraction**: Interfaces before needed, generics when interfaces suffice
 - **Missing context cancellation**: Not calling `cancel()`, no `ctx.Done()` checks
 
-### LOW (Could Improve)
+### P3 (Could Improve)
 
 - **Verbose local variables**: `userAccountBalance` when `balance` suffices
 - **Redundant type declarations**: When type inference works
@@ -97,21 +97,21 @@ When uncertain, verify against the standard library before flagging.
 ## Output Format
 
 ```txt
-## CRITICAL Issues
+## P1 Issues
 
 - **file.go:123** - [violation description]
   - Current: `[problematic code snippet]`
   - Fix: [brief description of idiomatic approach]
   - Evidence: [Link to Effective Go/stdlib/Go Wiki]
 
-## HIGH
+## P2
 
 - **file.go:45** - [violation description]
   - Current: `[code]`
   - Fix: [approach]
   - Evidence: [source]
 
-## LOW
+## P3
 
 - **file.go:78** - [minor issue]
   - Suggestion: [improvement]
@@ -135,13 +135,13 @@ When flagging a violation, search these sources for the idiomatic alternative.
 
 ### Error Handling
 
-- Silent with `_` → CRITICAL
-- Logged but not returned → HIGH (usually)
+- Silent with `_` → P1
+- Logged but not returned → P2 (usually)
 - Handled differently but safely → OK
 
 ### Package Names
 
-- Generic (`utils`, `common`) → CRITICAL
+- Generic (`utils`, `common`) → P1
 - Domain-generic (`httputil`, `netutil`) → OK
 - Business-specific → OK
 
@@ -149,21 +149,21 @@ When flagging a violation, search these sources for the idiomatic alternative.
 
 - Side-effect imports → OK
 - Simple registration → OK with caution
-- Business logic → CRITICAL
-- External resources (DB, network) → CRITICAL
+- Business logic → P1
+- External resources (DB, network) → P1
 
 ### Goroutine Lifecycle
 
-- No exit mechanism → CRITICAL
-- No cancellation → CRITICAL
+- No exit mechanism → P1
+- No cancellation → P1
 - Proper context handling → OK
 
 ### Interface Size
 
 - 1 method → OK (ideal)
 - 2-3 methods → OK
-- 4+ methods → HIGH, review for splitting
-- Used before needed → HIGH, remove
+- 4+ methods → P2, review for splitting
+- Used before needed → P2, remove
 
 ## Review Protocol
 

@@ -22,7 +22,7 @@ Husky hooks run automatically on commit (markdownlint + commitlint).
 
 ## Code Style
 
-- Severity levels: CRITICAL, HIGH, MEDIUM, LOW (all agents use this taxonomy)
+- Severity levels: P1, P2, P3 (all agents use this taxonomy)
 - Clean output: "No issues found." (all agents use this label)
 - File naming: kebab-case for all files
 - Skill references: use relative paths (`skills/foo/SKILL.md`), not `~/.claude/` absolute paths
@@ -35,7 +35,7 @@ Husky hooks run automatically on commit (markdownlint + commitlint).
 
 - `README.md` - Install instructions, component catalog, plugin list
 - `CLAUDE_TEMPLATE.md` - Template for CLAUDE.md in other projects
-- `skills/prompt-engineer/SKILL.md` - Quality checklists for agents, commands, skills
+- `skills/sharpen/SKILL.md` - Quality checklists for agents, commands, skills
 
 ## Common Mistakes
 
