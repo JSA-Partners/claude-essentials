@@ -1,22 +1,22 @@
 ---
 name: decompose
-description: Decompose user stories into dependency-ordered implementation plans
+description: Decompose user stories into dependency-ordered implementation units
 ---
 
 # Decompose Skill
 
-Break plans, stories, or specs into single-commit implementation units with strict dependency ordering.
+Break stories or specs into single-commit implementation units with strict dependency ordering.
 
 ## Core Principle
 
-**Plans are dependency-ordered work units.** Each plan should be independently reviewable, independently testable, and safe to merge without later plans existing.
+**Units are dependency-ordered work items.** Each unit is one commit, independently reviewable, independently testable, and safe to merge without later units existing.
 
 ## Quick Reference
 
 | # | Rule | Key Test |
 |---|------|----------|
-| 1 | Dependency-first ordering | Plans form a DAG — no circular deps |
-| 2 | One concern per plan | Can you describe the plan in one sentence? |
+| 1 | Dependency-first ordering | Units form a DAG -- no circular deps |
+| 2 | One concern per unit | Can you describe the unit in one sentence? |
 | 3 | Production/test separation | Production refactors don't include test migration |
 | 4 | Reviewable size | <15 files, <3 packages, <8 steps |
 | 5 | Temporary compatibility | Build and tests pass after every unit |
@@ -25,11 +25,11 @@ Break plans, stories, or specs into single-commit implementation units with stri
 
 ### Rule 1: Dependency-First Ordering
 
-Plans form a directed acyclic graph. Every plan explicitly lists what it depends on. If plan B needs artifacts from plan A, plan A comes first. Plans at the same level can execute in parallel.
+Units form a directed acyclic graph. Every unit explicitly lists what it depends on. If unit B needs artifacts from unit A, unit A comes first. Units at the same level can execute in parallel.
 
-### Rule 2: One Concern Per Plan
+### Rule 2: One Concern Per Unit
 
-Each plan should change code for one reason:
+Each unit should change code for one reason:
 
 | Good | Bad |
 | --- | --- |
@@ -41,32 +41,32 @@ Each plan should change code for one reason:
 
 When a story involves both production code changes and test migration:
 
-1. Production refactors get their own plans (they must not break existing tests)
-2. New test infrastructure gets its own plan
-3. Test migration gets per-package plans
+1. Production refactors get their own units (they must not break existing tests)
+2. New test infrastructure gets its own unit
+3. Test migration gets per-package units
 4. Test deletion happens only after replacement tests pass
 
 ### Rule 4: Reviewable Size
 
-A plan should be reviewable in one sitting. Warning signs it's too large:
+A unit should be reviewable in one sitting. Warning signs it's too large:
 
 - Touches 15+ files
 - Spans 3+ packages
 - Has more than 8 steps
 - Requires both production code changes and test changes
 
-When a plan is too large, split by:
+When a unit is too large, split by:
 
-1. **By package** — one sub-plan per package (most common)
-2. **By layer** — production code vs test code vs wiring
-3. **By concern** — interfaces vs implementation vs migration
+1. **By package** -- one sub-unit per package (most common)
+2. **By layer** -- production code vs test code vs wiring
+3. **By concern** -- interfaces vs implementation vs migration
 
 ### Rule 5: Temporary Compatibility
 
 If a unit changes function signatures or APIs, it must either:
 
 - Add deprecated wrappers that preserve the old signatures
-- Update all callers in the same plan
+- Update all callers in the same unit
 
 Never leave the codebase in a broken state between units. Build and tests must pass after every unit.
 
@@ -74,7 +74,7 @@ Never leave the codebase in a broken state between units. Build and tests must p
 
 | Don't | Instead |
 | --- | --- |
-| Create a plan that touches 4 packages | Split by package — one sub-plan each |
+| Create a unit that touches 4 packages | Split by package -- one sub-unit each |
 | Mix "add new tests" with "delete old tests" | Separate: add first, delete after verification |
 | List dependencies by number only | State WHY the dependency exists |
 | Include "special considerations" catch-all | Flag edge cases inline within specific steps |
@@ -103,14 +103,18 @@ Before accepting research results:
 - Pattern consistency noted (do most projects agree?)
 - Skip research when the codebase already has an established pattern or the user gave a specific preference
 
+## Output Format
+
+The deliverable is unit files written to `/tmp/claude/decompose-<name>/`, not chat prose. Each unit becomes a separate markdown file (`unit-01.md`, `unit-02.md`, etc.) plus a `plan.md` with the summary table. The calling command defines the exact file template -- this skill defines the decomposition rules only.
+
 ## Evaluation Checklist
 
-Before presenting the decomposition to the user, verify:
+Before writing the unit files, verify:
 
-- [ ] Every plan has explicit dependencies listed
+- [ ] Every unit has explicit dependencies listed
 - [ ] No circular dependencies exist
-- [ ] Each plan passes the "one concern" test
-- [ ] Each plan can be merged independently without breaking the build
-- [ ] Large plans (15+ files) have been flagged for splitting
+- [ ] Each unit passes the "one concern" test
+- [ ] Each unit can be merged independently without breaking the build
+- [ ] Large units (15+ files) have been flagged for splitting
 - [ ] Research decisions are documented with citations
 - [ ] Acceptance criteria are specific and checkable

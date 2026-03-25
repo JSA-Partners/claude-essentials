@@ -30,6 +30,11 @@
       "Bash(git status:*)"
     ]
   },
+  "sandbox": {
+    "filesystem": {
+      "allowWrite": ["/tmp/claude"]
+    }
+  },
   "hooks": {},
   "statusLine": {
     "type": "command",
