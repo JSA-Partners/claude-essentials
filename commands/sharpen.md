@@ -3,7 +3,7 @@ description: Improve Claude Code commands, skills, and agents using proven patte
 argument-hint: [component | commands | skills | agents | --all]
 ---
 
-# Optimize Claude Code Configuration
+# Sharpen
 
 Systematically improve this project's commands, skills, and agents using proven patterns.
 
@@ -19,8 +19,8 @@ This ensures we collaborate on improvements rather than making premature changes
 
 Load on-demand for comprehensive expertise:
 
-- `skills/prompt-engineer/SKILL.md` - Quality checklists, scoring, patterns
-- `skills/prompt-engineer/patterns.md` - Reusable templates for commands/skills/agents
+- `skills/sharpen/SKILL.md` - Quality checklists, scoring, patterns
+- `skills/sharpen/patterns.md` - Reusable templates for commands/skills/agents
 
 ---
 
@@ -74,7 +74,7 @@ Before suggesting ANY improvements, use AskUserQuestion to understand:
 Based on scope from $ARGUMENTS:
 
 1. Read all relevant configuration files
-2. Load `skills/prompt-engineer/SKILL.md` for quality checklists
+2. Load `skills/sharpen/SKILL.md` for quality checklists
 3. Score each artifact against the checklists (0-10)
 4. Identify gaps, anti-patterns, and opportunities
 5. **Do NOT suggest fixes yet** - present findings first
@@ -128,7 +128,7 @@ For each approved improvement:
 
 1. Make the specific change
 2. Explain what was changed and why
-3. Verify the change follows patterns from `skills/prompt-engineer/patterns.md`
+3. Verify the change follows patterns from `skills/sharpen/patterns.md`
 
 **File Creation Authority**: You may create new files (skills, agents, commands) if beneficial. Always explain why and get approval first.
 

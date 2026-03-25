@@ -244,11 +244,11 @@ For each item:
 
 ## Severity Levels
 
-| Level    | Definition   | Action                |
-| -------- | ------------ | --------------------- |
-| CRITICAL | [definition] | Must fix before merge |
-| MAJOR    | [definition] | Should fix            |
-| MINOR    | [definition] | Consider fixing       |
+| Level | Definition   | Action                |
+| ----- | ------------ | --------------------- |
+| P1    | [definition] | Must fix before merge |
+| P2    | [definition] | Should fix            |
+| P3    | [definition] | Consider fixing       |
 
 ## Detection Patterns
 
@@ -423,7 +423,7 @@ color: Required - blue | red | yellow | orange | magenta | cyan | green
 
 | Type     | Convention                                | Examples                                |
 | -------- | ----------------------------------------- | --------------------------------------- |
-| Commands | `verb-noun.md` or `noun.md`               | `create-story.md`, `commit.md`          |
+| Commands | `verb.md` or `verb-noun.md`               | `decompose.md`, `commit.md`             |
 | Skills   | `domain-name/`                            | `story-drafter/`, `openapi/`            |
 | Agents   | `role-reviewer.md` or `role-generator.md` | `scope-reviewer.md`, `story-drafter.md` |
 

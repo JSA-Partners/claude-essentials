@@ -1,9 +1,9 @@
 ---
-description: Interactive user story creation using specialized agents
+description: Brainstorm and create user stories through agent collaboration
 argument-hint: [feature description]
 ---
 
-# Create Story
+# Brainstorm
 
 Create user stories through agent collaboration.
 
@@ -93,3 +93,12 @@ When story-estimator returns ≥8 points:
 2. Ask which to draft first
 3. Create focused story for that component
 4. Note remaining items for follow-up
+
+## Next Step
+
+When the story is created, end with:
+
+```markdown
+## Next Step
+Ready to break this down. Run `/decompose` to create implementation units.
+```

@@ -1,11 +1,11 @@
 ---
-description: Update optimize-claude command with new resources or improvements
+description: Update the /sharpen command with new resources or improvements
 argument-hint: <url-or-change-description>
 ---
 
-# Meta-Optimize
+# Meta
 
-Update the `/optimize-claude` command based on new resources or requested changes.
+Update the `/sharpen` command based on new resources or requested changes.
 
 ## Input: $ARGUMENTS
 
@@ -15,8 +15,8 @@ If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask: "What would you like to 
 
 Examples:
 
-- `/meta-optimize https://addyosmani.com/blog/ai-coding-workflow/`
-- `/meta-optimize Add a phase for checking hook compatibility`
+- `/meta https://addyosmani.com/blog/ai-coding-workflow/`
+- `/meta Add a phase for checking hook compatibility`
 
 ---
 
@@ -24,8 +24,8 @@ Examples:
 
 Load for comprehensive quality criteria:
 
-- `skills/prompt-engineer/SKILL.md` - Quality checklists, anti-patterns, scoring
-- `skills/prompt-engineer/patterns.md` - Structural templates
+- `skills/sharpen/SKILL.md` - Quality checklists, anti-patterns, scoring
+- `skills/sharpen/patterns.md` - Structural templates
 
 ---
 
@@ -40,9 +40,9 @@ Load for comprehensive quality criteria:
    - Command/skill design principles
    - Quality gates or verification steps
 3. **Identify where insights apply** in:
-   - `commands/optimize-claude.md` (main command)
-   - `skills/prompt-engineer/SKILL.md` (quality checklists)
-   - `skills/prompt-engineer/patterns.md` (templates)
+   - `commands/sharpen.md` (main command)
+   - `skills/sharpen/SKILL.md` (quality checklists)
+   - `skills/sharpen/patterns.md` (templates)
    - Other commands/skills/agents if the pattern applies broadly
 4. **Present proposed changes** with rationale
 5. **Apply changes** after user approval
@@ -78,7 +78,7 @@ Load for comprehensive quality criteria:
 
 **Section**: [where]
 **Change**: [what]
-**Rationale**: [why this improves optimize-claude]
+**Rationale**: [why this improves sharpen]
 
 ## Apply?
 ```
@@ -92,15 +92,15 @@ Use AskUserQuestion to confirm before making changes.
 This command creates a **self-improving loop**:
 
 ```markdown
-New insights → Update prompt-engineer skill → Better checklists →
-Better /optimize-claude evaluations → Higher quality artifacts
+New insights → Update sharpen skill → Better checklists →
+Better /sharpen evaluations → Higher quality artifacts
 ```
 
 **Scope of influence**:
 
 - Changes to `SKILL.md` checklists affect how ALL future artifacts are scored
 - Changes to `patterns.md` templates affect how ALL future artifacts are structured
-- Changes to `optimize-claude.md` affect the optimization workflow itself
+- Changes to `sharpen.md` affect the optimization workflow itself
 
 **Implication**: Be thoughtful about skill changes—they have system-wide effects.
 
@@ -111,9 +111,9 @@ Better /optimize-claude evaluations → Higher quality artifacts
 After applying changes:
 
 1. **Re-read modified files** to confirm changes applied correctly
-2. **Score against checklists** from prompt-engineer skill
+2. **Score against checklists** from sharpen skill
 3. **Check for anti-patterns** introduced by the changes
-4. **If prompt-engineer skill was modified**: Verify new patterns/checklists are consistent with existing ones
+4. **If sharpen skill was modified**: Verify new patterns/checklists are consistent with existing ones
 5. **Present verification summary**:
 
 ```markdown

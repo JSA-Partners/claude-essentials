@@ -1,5 +1,5 @@
 ---
-name: prompt-engineer
+name: sharpen
 description: Expert knowledge for improving Claude Code commands, skills, and agents.
 ---
 
@@ -102,7 +102,7 @@ Transform commands, skills, and agents into well-structured, effective, maintain
 - [ ] Clear mission statement
 - [ ] Defined input/output format
 - [ ] Tool restrictions appropriate to role
-- [ ] Severity levels defined (CRITICAL, MAJOR, etc.)
+- [ ] Severity levels defined (P1, P2, P3)
 
 ### Behavior (Score 0-10)
 
@@ -190,30 +190,30 @@ Transform commands, skills, and agents into well-structured, effective, maintain
 
 | Pattern            | Symptom                                            | Severity |
 | ------------------ | -------------------------------------------------- | -------- |
-| Kitchen sink       | >150 lines, multiple unrelated phases              | MAJOR    |
-| No verification    | Completes without validation                       | MAJOR    |
-| Hardcoded commands | Build commands embedded, not referencing CLAUDE.md | MODERATE |
-| Missing arguments  | No `$ARGUMENTS` handling when needed               | MODERATE |
-| No questions       | Never uses `AskUserQuestion`                       | MODERATE |
+| Kitchen sink       | >150 lines, multiple unrelated phases              | P1       |
+| No verification    | Completes without validation                       | P1       |
+| Hardcoded commands | Build commands embedded, not referencing CLAUDE.md | P2       |
+| Missing arguments  | No `$ARGUMENTS` handling when needed               | P2       |
+| No questions       | Never uses `AskUserQuestion`                       | P2       |
 
 ### Skill Anti-Patterns
 
 | Pattern          | Symptom                                | Severity |
 | ---------------- | -------------------------------------- | -------- |
-| Monolithic       | Single file >500 lines                 | MAJOR    |
-| No examples      | Missing examples.md or inline examples | MODERATE |
-| Stale references | Links to outdated docs                 | MODERATE |
-| No checklist     | Missing quality validation criteria    | MINOR    |
+| Monolithic       | Single file >500 lines                 | P1       |
+| No examples      | Missing examples.md or inline examples | P2       |
+| Stale references | Links to outdated docs                 | P2       |
+| No checklist     | Missing quality validation criteria    | P3       |
 
 ### Agent Anti-Patterns
 
 | Pattern            | Symptom                      | Severity |
 | ------------------ | ---------------------------- | -------- |
-| God agent          | All tools, unfocused scope   | MAJOR    |
-| No severity levels | Findings lack prioritization | MODERATE |
-| Echo agent         | Summarizes without analysis  | MODERATE |
-| No evidence        | Flags issues without proof   | MAJOR    |
-| Aggressive         | Flags hypothetical issues    | MODERATE |
+| God agent          | All tools, unfocused scope   | P1       |
+| No severity levels | Findings lack prioritization | P2       |
+| Echo agent         | Summarizes without analysis  | P2       |
+| No evidence        | Flags issues without proof   | P1       |
+| Aggressive         | Flags hypothetical issues    | P2       |
 
 ---
 

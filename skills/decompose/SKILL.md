@@ -1,11 +1,11 @@
 ---
-name: story-planner
+name: decompose
 description: Decompose user stories into dependency-ordered implementation plans
 ---
 
-# Story Planner Skill
+# Decompose Skill
 
-Break large user stories into reviewable, implementable plans with strict dependency ordering.
+Break plans, stories, or specs into single-commit implementation units with strict dependency ordering.
 
 ## Core Principle
 
@@ -19,8 +19,7 @@ Break large user stories into reviewable, implementable plans with strict depend
 | 2 | One concern per plan | Can you describe the plan in one sentence? |
 | 3 | Production/test separation | Production refactors don't include test migration |
 | 4 | Reviewable size | <15 files, <3 packages, <8 steps |
-| 5 | Sub-plan naming | `plan-XX.md` top-level, `plan-XX-NN.md` sub-plans |
-| 6 | Temporary compatibility | `make build && make test` passes after every plan |
+| 5 | Temporary compatibility | Build and tests pass after every unit |
 
 ## Decomposition Rules
 
@@ -62,26 +61,14 @@ When a plan is too large, split by:
 2. **By layer** — production code vs test code vs wiring
 3. **By concern** — interfaces vs implementation vs migration
 
-### Rule 5: Sub-Plan Naming
+### Rule 5: Temporary Compatibility
 
-```txt
-plan-01.md          # Top-level plan
-plan-02.md          # Top-level plan (becomes index if split)
-plan-02-01.md       # Sub-plan of plan-02
-plan-02-02.md       # Sub-plan of plan-02
-plan-03.md          # Top-level plan
-```
-
-When a plan is split, the parent file becomes an index referencing sub-plans with their execution order and any shared context (decisions, conventions).
-
-### Rule 6: Temporary Compatibility
-
-If a plan changes function signatures or APIs, it must either:
+If a unit changes function signatures or APIs, it must either:
 
 - Add deprecated wrappers that preserve the old signatures
 - Update all callers in the same plan
 
-Never leave the codebase in a broken state between plans. `make build && make test` must pass after every plan.
+Never leave the codebase in a broken state between units. Build and tests must pass after every unit.
 
 ## Anti-Patterns
 
@@ -93,36 +80,32 @@ Never leave the codebase in a broken state between plans. `make build && make te
 | Include "special considerations" catch-all | Flag edge cases inline within specific steps |
 | Skip the "one sentence" test | If you can't summarize in one sentence, split |
 
-## Decision Documentation
+## Research Protocol
 
-Every plan that was informed by research must include:
+When a technical decision needs "research idiomatic approach", search for actual implementations in established repos. Code over opinions.
 
-```markdown
-## Research-Driven Decisions
+### Reference Projects
 
-- **[Topic]**: [What established projects do] → [What we'll do]
-```
+**Go**: hashicorp/consul (HTTP handlers, middleware), hashicorp/vault (storage backends, plugins), cockroachdb/cockroach (SQL layer, store tests), kubernetes/kubernetes (API machinery, DI)
 
-## Acceptance Criteria Pattern
+**SvelteKit**: sveltejs/kit (routing, hooks, load functions), sveltejs/realworld (full app patterns), huntabyte/shadcn-svelte (component composition, actions)
 
-Every plan must end with acceptance criteria that are:
+**TypeScript**: effect-ts/effect (error handling, composability), colinhacks/zod (schema validation, type inference), trpc/trpc (end-to-end type safety, API patterns)
 
-- **Checkable** — can be verified with a command or code inspection
-- **Specific** — not "tests pass" but "make test-run PKG=./path/... passes"
-- **Complete** — cover the "no regressions" case (build, lint, test)
+**Python**: pallets/flask (routing, blueprints), encode/starlette (async middleware, lifespan), python-attrs/attrs (data modeling), psf/requests (API design, session management)
 
-```markdown
-## Acceptance Criteria
+### Research Quality
 
-- [ ] [Specific verifiable condition]
-- [ ] `make build` passes
-- [ ] `make test` passes (or specific package test)
-- [ ] `make lint` passes
-```
+Before accepting research results:
 
-## Plan Evaluation Checklist
+- At least 3 real projects cited with file paths
+- Actual code snippets shown (not paraphrased)
+- Pattern consistency noted (do most projects agree?)
+- Skip research when the codebase already has an established pattern or the user gave a specific preference
 
-Before presenting plans to the user, verify:
+## Evaluation Checklist
+
+Before presenting the decomposition to the user, verify:
 
 - [ ] Every plan has explicit dependencies listed
 - [ ] No circular dependencies exist
