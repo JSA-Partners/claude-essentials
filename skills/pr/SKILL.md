@@ -23,7 +23,7 @@ Run in parallel:
 
 - Not on base branch (would have nothing to PR)
 - Has commits ahead of base: `git log [base]..HEAD --oneline`
-- Branch pushed to remote: `git ls-remote --heads origin [branch]`
+- Branch pushed and up to date: `git push --dry-run 2>&1` should report "Everything up-to-date"
 - No existing PR: `gh pr list --head [branch] --json number`
 
 If any fail, inform user and stop.
