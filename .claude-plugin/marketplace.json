@@ -12,7 +12,7 @@
     {
       "name": "essentials",
       "description": "Opinionated agents and skills for shipping code.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "JSA+Partners",
         "url": "https://jsapartners.co"
