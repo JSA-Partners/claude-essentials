@@ -1,124 +1,48 @@
 ---
-name: document
-description: Guide for writing docs/claude reference documents -- file types, structure, and quality criteria
+description: Capture learnings from implementation into docs/claude, memories, or CLAUDE.md
+argument-hint: [topic]
+allowed-tools: Read, Write, Bash, Grep, Glob
 ---
 
-# Documentation Skill
+# Document: $ARGUMENTS
 
-Write `docs/claude/` files that serve as reference material for Claude. These are topic-based reference documents, not changelogs or journals.
+Capture what was learned during the most recent implementation and review cycle. Load `skills/document/reference.md` for file format guidance and examples.
 
-## Core Principle
+## Phase 1: Gather Context
 
-Every docs/claude file should read like documentation a senior engineer wrote for a new team member who has access to the code but needs context the code does not provide.
+Look at the current branch's changes, review findings, and decisions made during implementation. Focus on knowledge that is NOT derivable from reading the code or git history:
 
-## File Types
+- Architectural patterns and their rationale
+- Non-obvious gotchas or constraints discovered
+- Decisions made and why (especially rejected alternatives)
+- Step-by-step guides for recurring tasks
+- Style rules enforced by tooling
 
-| Type | Purpose | Example file |
-| --- | --- | --- |
-| Architecture | System structure, data flow, component relationships | `architecture.md` |
-| Patterns | Step-by-step guides for recurring tasks (adding routes, forms, endpoints) | `patterns.md` |
-| Decisions | Key architectural choices with rationale and rejected alternatives | `decisions.md` |
-| Testing | Test infrastructure, factories, assertion helpers, how to run tests | `testing.md` |
-| Code Style | Formatting rules enforced by linters, naming conventions | `code-style.md` |
-| Domain Models | Entity relationships, business rules, constraints | `domain-models.md` |
+## Phase 2: Choose Destination
 
-Not every project needs all types. Create files as topics emerge.
+Tiered by significance:
 
-## File Structure
+1. **`docs/claude/`** (default) -- Create or update a topic file. One file per topic area, not per session. If `docs/claude/` does not exist, create it.
+2. **Memories** -- If the learning applies across projects (not just this repo), save to the memory system.
+3. **`CLAUDE.md`** -- Only for mission-critical, project-wide rules that must load every session. This is rare.
 
-Every file follows the same shape:
+## Phase 3: Write
 
-```markdown
-# [Topic]
+Read the existing topic file first (if one exists). Integrate new content into the existing structure rather than appending a dated entry.
 
-[One sentence describing what this document covers.]
+Use `AskUserQuestion` if unclear which topic file the content belongs in, or whether to create a new one.
 
-## [Section]
+## Phase 4: Verify
 
-[Explanation of the concept, pattern, or decision.]
+- Confirm the file reads as a coherent reference document, not a changelog
+- Check for duplication with other docs/claude files
+- Confirm no content that belongs in code comments or git messages
 
-[Code examples, tables, or diagrams as needed.]
-```
+## Next Step
 
-### Key rules
-
-- **One file per topic area** -- not per session, not per date
-- **No date headers** -- content is organized by concept, not chronology
-- **Integrate, do not append** -- new learnings merge into the relevant section
-- **Cross-reference** -- link between docs/claude files with relative paths (`[patterns.md](./patterns.md)`)
-
-## Content Patterns
-
-### Architecture docs
-
-- Start with directory tree showing core structure
-- Include data flow diagrams (text-based)
-- Document the layers and their responsibilities
-- Show construction and access patterns with code examples
-
-### Decision docs
-
-Each decision follows a consistent format:
+When documentation is complete, end with:
 
 ```markdown
-## [Decision Title]
-
-**Decision**: [What was decided.]
-
-**Rationale**:
-
-- [Why this, not that]
-- [Constraints that drove the choice]
-
-**Example**:
-
-[Code showing the pattern in action.]
+## Next Step
+Ready to commit this unit with `/commit`.
 ```
-
-### Pattern docs (step-by-step guides)
-
-- Start with a table of contents linking to sections
-- Each section is a self-contained recipe
-- Include code examples showing the complete pattern
-- Use tables for mapping concepts (routes, methods, file locations)
-
-### Testing docs
-
-- How to run tests (exact commands)
-- Test infrastructure (server setup, factories, helpers)
-- Assertion patterns with code examples
-- Constants and utilities available
-
-### Code style docs
-
-- Rule, then good/bad code examples
-- Note what enforces the rule (linter name, config)
-- Explain why the rule exists
-
-## What Belongs in docs/claude
-
-- Architecture and data flow that is not obvious from file structure alone
-- Rationale behind non-obvious decisions (especially rejected alternatives)
-- Patterns with enough boilerplate that Claude needs a template
-- Testing infrastructure and helpers
-- Linter-enforced style rules
-- Domain model relationships and business constraints
-
-## What Does NOT Belong
-
-- Anything derivable from reading the code directly
-- Git history or recent changes (use `git log`)
-- Debugging solutions (the fix is in the code, the context is in the commit)
-- Ephemeral task details or conversation context
-- Content already in CLAUDE.md
-- API documentation (use OpenAPI specs)
-
-## Quality Checklist
-
-- [ ] Reads as a coherent reference document, not a changelog
-- [ ] No date-stamped sections
-- [ ] Code examples are complete and copy-pasteable
-- [ ] Tables used for mappings and comparisons
-- [ ] Cross-references to related docs/claude files
-- [ ] No duplication with other docs/claude files
-- [ ] Content would genuinely help Claude work in this codebase

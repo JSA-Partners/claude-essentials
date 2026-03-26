@@ -1,68 +1,53 @@
 ---
-name: implement
-description: Phased implementation workflow with idiom enforcement and scope discipline
+description: Implement one decomposed unit with idiomatic patterns, scope discipline, and quality gates
+argument-hint: <path-to-unit.md or unit-number>
+context: fork
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent
 ---
 
-# Implement Skill
+# Implement: $ARGUMENTS
 
-Phased workflow for implementing a single decomposed unit. The calling command detects the project language and selects the appropriate idiom reviewer.
+If `$ARGUMENTS` is a file path (e.g., `/tmp/decompose-auth/unit-01.md`), read that file as the unit description. If it's a number, look for the unit in the current conversation context. If the file is not found or the unit number has no match, use `AskUserQuestion` to request the unit description.
+
+## Language Detection
+
+Detect the project language from CLAUDE.md `Tech Stack` section or file extensions in the working directory. Set parameters accordingly:
+
+### Go
+
+| Parameter                | Value                 |
+| ------------------------ | --------------------- |
+| LANGUAGE                 | Go                    |
+| IDIOM_REVIEWER           | go-idiom-reviewer     |
+| AUTHORITATIVE_REFERENCES | [Effective Go](https://go.dev/doc/effective_go), [Go Code Review Comments](https://go.dev/wiki/CodeReviewComments) |
+
+### Svelte
+
+| Parameter                | Value                   |
+| ------------------------ | ----------------------- |
+| LANGUAGE                 | Svelte 5                |
+| IDIOM_REVIEWER           | svelte-idiom-reviewer   |
+| AUTHORITATIVE_REFERENCES | [Svelte 5 Docs](https://svelte.dev/docs), [SvelteKit Docs](https://svelte.dev/docs/kit) |
 
 ## Golden Rule
 
 **Idiomatic code always wins.** If existing code conflicts with language idioms, write idiomatic code and notify the user. Never propagate bad patterns.
 
-## Phase 1: Understand
+## Workflow
 
-**DO NOT WRITE CODE YET** - first understand the scope.
+Follow the shared implementation workflow defined in `skills/implement/reference.md`, substituting the detected language parameters.
 
-1. **Read the unit** description (from a unit file path, decomposition output, or user input)
-2. **Extract scope boundaries:**
-   - IN: What this unit delivers (one concern, one commit)
-   - OUT: Everything else
-3. **Explore the codebase** using the Explore agent for affected areas
-4. **Identify files** you'll likely modify
+## Tests
 
-## Phase 2: Plan
+After implementation, run the project's test suite. If tests fail, fix them before completing. There is no point in proceeding to `/review` with failing tests.
 
-Call `EnterPlanMode`. Do not proceed until plan is approved.
+## Next Step
 
-1. **Run the idiom reviewer** on reference files to evaluate existing patterns
-2. **Categorize each reference:**
-   - IDIOMATIC: Follow exactly
-   - UNIDIOMATIC: Do NOT copy; notify user
-3. **Present your plan** and wait for approval
-4. **If unidiomatic patterns exist**, tell user explicitly what you found and what you'll do instead
+When implementation and tests pass, end with:
 
-## Phase 3: Implement
+```markdown
+## Next Step
+Ready to proceed with `/review`. Unit scope: `<path-to-unit-file>`
+```
 
-For each component:
-
-1. **Write idiomatic code** (don't copy-paste from reference files)
-2. **Run project lint/test** after each logical change (see CLAUDE.md for commands)
-3. **Stay in scope** - only implement what the unit describes
-
-### Constraints
-
-- No "while we're here" improvements
-- No adding docs/comments to unchanged code
-- No speculative features
-- Ask if unsure whether something is in scope
-
-## Anti-Patterns
-
-| Don't | Why |
-| --- | --- |
-| Skip Plan mode | Doubles/triples success rate |
-| Copy unidiomatic code | "It exists" is not justification |
-| Expand scope | Scope creep kills projects |
-| Skip lint/test before review | Catch build failures early |
-| Hardcode build commands | Reference CLAUDE.md instead |
-
-## Checkpoint Moments
-
-**Use `AskUserQuestion` when:**
-
-- Existing patterns are unidiomatic
-- Unit description is ambiguous
-- Implementation exceeds expected size
-- You're tempted to add something not in scope
+Include the unit file path so `/review` can read it for scope boundaries.

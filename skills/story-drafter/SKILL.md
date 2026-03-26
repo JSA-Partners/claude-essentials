@@ -1,6 +1,7 @@
 ---
 name: story-drafter
 description: Convert feature ideas to implementable user stories with appropriate templates
+user-invocable: false
 ---
 
 # Story Drafter Skill

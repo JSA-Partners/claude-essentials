@@ -1,12 +1,12 @@
-# Reusable Patterns for Commands, Skills, and Agents
+# Reusable Patterns for Skills and Agents
 
 Templates and patterns for creating well-structured Claude Code artifacts.
 
 ---
 
-## Command Patterns
+## Skill Patterns
 
-### Interactive Command
+### Interactive Skill
 
 Use when user input shapes the workflow:
 
@@ -14,9 +14,10 @@ Use when user input shapes the workflow:
 ---
 description: [verb] [object] with [method]
 argument-hint: [example input]
+allowed-tools: Read, Write, Glob
 ---
 
-# Command Name
+# Skill Name
 
 Brief description.
 
@@ -42,7 +43,7 @@ If $ARGUMENTS empty, use AskUserQuestion:
 [verification and output format]
 ```
 
-### Plan-Required Command
+### Plan-Required Skill
 
 Use for implementation tasks:
 
@@ -50,9 +51,10 @@ Use for implementation tasks:
 ---
 description: [verb] [object] with quality gates
 argument-hint: <identifier>
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
-# Command Name: $ARGUMENTS
+# Skill Name: $ARGUMENTS
 
 ## CRITICAL: Plan Mode Required
 
@@ -84,7 +86,7 @@ Before declaring complete:
 - [ ] Gate 2
 ```
 
-### Agent-Orchestrating Command
+### Agent-Orchestrating Skill
 
 Use when parallel specialized work improves quality:
 
@@ -92,9 +94,11 @@ Use when parallel specialized work improves quality:
 ---
 description: [verb] [object] using specialized agents
 argument-hint: [scope]
+context: fork
+allowed-tools: Read, Grep, Glob, Agent
 ---
 
-# Command Name
+# Skill Name
 
 ## Phase 1: Identify Scope
 
@@ -118,11 +122,9 @@ Combine agent outputs into unified report.
 [how to address issues found]
 ```
 
----
+### Domain Expertise Skill (Reference Only)
 
-## Skill Patterns
-
-### Domain Expertise Skill
+Use for agent reference material with `user-invocable: false`:
 
 ```markdown
 ---
@@ -387,21 +389,16 @@ You estimate [metric] for [scope].
 
 ## YAML Frontmatter Reference
 
-### Commands
-
-```yaml
----
-description: Required - shown in /help
-argument-hint: Optional - placeholder text
----
-```
-
 ### Skills
 
 ```yaml
 ---
-name: Required - skill identifier
-description: Required - when to load this skill
+description: Required - shown in / menu and used for auto-invocation
+argument-hint: Optional - placeholder text
+allowed-tools: Optional - comma-separated tool list
+disable-model-invocation: Optional - true for skills with side effects
+user-invocable: Optional - false for agent-only reference skills
+context: Optional - fork to run in subagent
 ---
 ```
 
@@ -414,6 +411,7 @@ description: Required - what this agent does
 tools: Required - [Read, Grep, Glob, Bash, WebSearch, WebFetch]
 model: Required - opus | haiku
 color: Required - blue | red | yellow | orange | magenta | cyan | green
+effort: Optional - low | medium | high | max
 ---
 ```
 
@@ -421,11 +419,10 @@ color: Required - blue | red | yellow | orange | magenta | cyan | green
 
 ## Naming Conventions
 
-| Type     | Convention                                | Examples                                |
-| -------- | ----------------------------------------- | --------------------------------------- |
-| Commands | `verb.md` or `verb-noun.md`               | `decompose.md`, `commit.md`             |
-| Skills   | `domain-name/`                            | `story-drafter/`, `openapi/`            |
-| Agents   | `role-reviewer.md` or `role-generator.md` | `scope-reviewer.md`, `story-drafter.md` |
+| Type   | Convention                                | Examples                                |
+| ------ | ----------------------------------------- | --------------------------------------- |
+| Skills | `verb/SKILL.md` or `domain-name/SKILL.md` | `commit/SKILL.md`, `review/SKILL.md`   |
+| Agents | `role-reviewer.md` or `role-generator.md` | `scope-reviewer.md`, `story-drafter.md` |
 
 ---
 
@@ -433,7 +430,6 @@ color: Required - blue | red | yellow | orange | magenta | cyan | green
 
 | Type             | Target     | Maximum   |
 | ---------------- | ---------- | --------- |
-| Command          | <100 lines | 150 lines |
-| SKILL.md         | <300 lines | 500 lines |
+| SKILL.md         | <200 lines | 300 lines |
 | Agent            | <150 lines | 200 lines |
 | Supporting files | <200 lines | 300 lines |

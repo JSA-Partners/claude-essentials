@@ -1,91 +1,70 @@
 ---
-name: review
-description: Parallel review orchestration with adversarial verification and human approval
+description: Review code with parallel specialized agents, adversarial verification, and mandatory human approval
+argument-hint: [file | path/to/dir]
+context: fork
+allowed-tools: Read, Grep, Glob, Bash, Agent
 ---
 
-# Review Skill
+# Review: $ARGUMENTS
 
-Systematic code review using specialized agents in parallel, with skeptical verification and mandatory human approval. The calling command detects the project language and selects the appropriate idiom reviewer.
+## Language Detection
 
-## Execution Flow
+Detect the project language from CLAUDE.md `Tech Stack` section or file extensions. Set parameters accordingly:
 
-### Phase 1: Identify Changes
+### Go
 
-1. If a file/path is provided, review that scope
-2. Otherwise, use `git diff --name-only HEAD~1` for recent changes
-3. Filter to language-appropriate file extensions (include test files only if explicitly reviewing tests)
+| Parameter       | Value               |
+| --------------- | ------------------- |
+| LANGUAGE        | Go                  |
+| IDIOM_REVIEWER  | go-idiom-reviewer   |
+| FILE_EXTENSIONS | `.go` files (include `_test.go` only if explicitly reviewing tests) |
 
-### Edge Cases
+### Svelte
 
-| Scenario | Behavior |
-| --- | --- |
-| No files match filter | Report "No files found in scope" and exit |
-| Invalid path provided | Report "Path not found: [path]" and exit |
-| Not a git repo (no arguments) | Report "No git repository found. Provide a file path." |
-| git diff returns empty | Report "No changes in HEAD~1. Provide a file path." |
+| Parameter       | Value                 |
+| --------------- | --------------------- |
+| LANGUAGE        | Svelte/SvelteKit      |
+| IDIOM_REVIEWER  | svelte-idiom-reviewer |
+| FILE_EXTENSIONS | `.svelte`, `.ts`, `.js` files (include `*.test.ts` only if explicitly reviewing tests) |
 
-### Large Scope Handling
+### Large Scope Filter (Svelte only)
 
-If scope > 10 files, use `AskUserQuestion`: "Found [N] files. Review all or focus on specific areas?"
+When scope > 10 files, offer language-specific filters:
 
-### Unit-Scoped Review
+- All files
+- Components only (`.svelte`)
+- Server routes only (`+server`, `+page.server`)
+- Let me specify
 
-If the changes were produced by `/implement` from a decomposed unit file, read the unit file to establish scope boundaries. Pass the unit's **Scope > IN**, **Scope > OUT**, and **Acceptance Criteria** sections to the `scope-reviewer` agent. The scope-reviewer must only check the unit's acceptance criteria, not the full parent story. Work belonging to other units is intentionally deferred and must not be flagged.
+## Workflow
 
-### Phase 2: Parallel Review
+Follow the shared review workflow defined in `skills/review/reference.md`, substituting the detected language parameters.
 
-Run these 5 agents **in parallel** on identified changes:
+## Transparency
 
-| Agent | Focus |
-| --- | --- |
-| `[idiom-reviewer]` | Language patterns and idioms |
-| `complexity-reviewer` | YAGNI, AHA, Rule of Three, SRP |
-| `technical-reviewer` | Security, performance, data integrity |
-| `scope-reviewer` | Scope creep, requirement tracing |
-| `architecture-advisor` | Design patterns (only when confident) |
+After all agents complete and the skeptic-reviewer runs:
 
-Each agent outputs findings with `file:line` references and severity levels.
+1. Show findings from **each agent** individually
+2. Show what the **skeptic-reviewer rejected** and why
+3. The user can override any rejection
 
-> Before flagging issues, agents should check if project CLAUDE.md documents intentional exceptions to standard patterns.
+## Human Gate
 
-### Phase 3: Verification
+Agent review is not final. After presenting findings, ask the user to review and approve. The review is only complete when the user explicitly approves.
 
-After collecting all findings, run `skeptic-reviewer`:
-
-- Input: All findings from Phase 2
-- Task: Challenge every finding, demand evidence, verify by reading actual code
-- Output: Only findings that survive adversarial scrutiny
-
-### Phase 4: Final Output
-
-Present verified findings grouped by severity:
+## Quick Mode
 
 ```txt
-## P1 (must fix)
-- `file:line` - issue (source: agent)
-
-## P2 (should fix)
-- `file:line` - issue (source: agent)
-
-## P3 (optional)
-- `file:line` - suggestion (source: agent)
-
-## CLEAN
-Code passes review with no issues.
-
----
-Verification: N verified, N rejected as false positives
+/review path/to/file
 ```
 
-## Agent Conflict Resolution
+Skips git diff and reviews only the specified file.
 
-When agents flag the same `file:line`:
+## Next Step
 
-1. Idiom reviewer wins on language style/patterns
-2. `technical-reviewer` wins on security/performance
-3. `complexity-reviewer` wins on abstraction questions
-4. `scope-reviewer` wins on requirement boundaries
+When the user approves the review, end with:
 
-## Severity Levels
-
-All agents use the standardized severity taxonomy: P1, P2, P3.
+```markdown
+## Next Step
+Ready to proceed with `/document` to capture learnings.
+```

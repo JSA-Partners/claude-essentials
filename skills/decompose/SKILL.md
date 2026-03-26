@@ -1,120 +1,122 @@
 ---
-name: decompose
-description: Decompose user stories into dependency-ordered implementation units
+description: Decompose a plan or user story into single-commit implementation units
+argument-hint: <path-to-plan.md>
+allowed-tools: Read, Write, Bash, Glob, Agent
 ---
 
-# Decompose Skill
+# Decompose: $ARGUMENTS
 
-Break stories or specs into single-commit implementation units with strict dependency ordering.
+If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask: "Provide a plan, story, or spec to decompose (file path or paste inline)."
 
-## Core Principle
+## Skill Reference
 
-**Units are dependency-ordered work items.** Each unit is one commit, independently reviewable, independently testable, and safe to merge without later units existing.
+- `skills/decompose/reference.md` - Decomposition rules and evaluation checklist
 
-## Quick Reference
+## CRITICAL RULES
 
-| # | Rule | Key Test |
-|---|------|----------|
-| 1 | Dependency-first ordering | Units form a DAG -- no circular deps |
-| 2 | One concern per unit | Can you describe the unit in one sentence? |
-| 3 | Production/test separation | Production refactors don't include test migration |
-| 4 | Reviewable size | <15 files, <3 packages, <8 steps |
-| 5 | Temporary compatibility | Build and tests pass after every unit |
+1. **All output files go in `/tmp/claude/decompose-<short-descriptor>/`.** Not in the project directory. Not in `docs/`. Always `/tmp/`.
+2. **You MUST write unit files to disk using the Write tool.** The deliverable is files, not chat prose. If you finish this command without calling Write to create unit files in `/tmp/`, you have failed.
+3. **Do not present unit details in chat.** Write them to files instead. The only chat output is the summary table and the next-step path.
 
-## Decomposition Rules
+---
 
-### Rule 1: Dependency-First Ordering
+## Phase 1: Understand
 
-Units form a directed acyclic graph. Every unit explicitly lists what it depends on. If unit B needs artifacts from unit A, unit A comes first. Units at the same level can execute in parallel.
+**DO NOT DECOMPOSE YET** - first understand the input and codebase.
 
-### Rule 2: One Concern Per Unit
+1. **Read the input** - file path or inline content from `$ARGUMENTS`
+2. **Explore the codebase** using an Explore agent:
 
-Each unit should change code for one reason:
+   ```txt
+   Task(subagent_type='Explore', thoroughness='very thorough'):
+   Explore all code areas affected by [input topic].
+   Map: current patterns, affected files, test structure.
+   ```
 
-| Good | Bad |
-| --- | --- |
-| "Add test helpers" | "Add test helpers and migrate 3 handler tests" |
-| "Refactor authors package" | "Refactor authors and publications packages" |
-| "Create store-level tests" | "Create store tests and delete handler tests" |
+3. **Extract every ambiguity** - anywhere the input says "what" but not "how"
+4. **Ask clarifying questions** via `AskUserQuestion` (max 4 per round, iterate as needed)
 
-### Rule 3: Production and Test Separation
+**Checkpoint -- stop and ask user when:**
 
-When a story involves both production code changes and test migration:
+- A unit touches more than 15 files
+- You're unsure whether something should be one unit or two
+- The input references work that may not be complete
+- Research reveals conflicting patterns
 
-1. Production refactors get their own units (they must not break existing tests)
-2. New test infrastructure gets its own unit
-3. Test migration gets per-package units
-4. Test deletion happens only after replacement tests pass
+---
 
-### Rule 4: Reviewable Size
+## Phase 2: Decompose and Write Files to /tmp/
 
-A unit should be reviewable in one sitting. Warning signs it's too large:
+Read `skills/decompose/reference.md` for decomposition rules.
 
-- Touches 15+ files
-- Spans 3+ packages
-- Has more than 8 steps
-- Requires both production code changes and test changes
+### Step 1: Plan the units (internal only, do not output to chat)
 
-When a unit is too large, split by:
+- Identify units -- each unit is one commit: one concern, independently mergeable
+- Order by dependency -- strict topological sort
+- Verify against the evaluation checklist in `skills/decompose/reference.md`
 
-1. **By package** -- one sub-unit per package (most common)
-2. **By layer** -- production code vs test code vs wiring
-3. **By concern** -- interfaces vs implementation vs migration
+### Step 2: Create the output directory
 
-### Rule 5: Temporary Compatibility
+```bash
+Bash: mkdir -p /tmp/claude/decompose-<short-descriptor>
+```
 
-If a unit changes function signatures or APIs, it must either:
+### Step 3: Write plan.md to /tmp/
 
-- Add deprecated wrappers that preserve the old signatures
-- Update all callers in the same unit
+Use the Write tool to create `/tmp/claude/decompose-<short-descriptor>/plan.md` containing:
 
-Never leave the codebase in a broken state between units. Build and tests must pass after every unit.
+```markdown
+# Decomposition: <story title>
 
-## Anti-Patterns
+| # | Unit | Description | Depends On | Files |
+|---|------|-------------|------------|-------|
+| 1 | <kebab-case-name> | <one sentence> | None | ~N |
+| 2 | <kebab-case-name> | <one sentence> | 1 | ~N |
+```
 
-| Don't | Instead |
-| --- | --- |
-| Create a unit that touches 4 packages | Split by package -- one sub-unit each |
-| Mix "add new tests" with "delete old tests" | Separate: add first, delete after verification |
-| List dependencies by number only | State WHY the dependency exists |
-| Include "special considerations" catch-all | Flag edge cases inline within specific steps |
-| Skip the "one sentence" test | If you can't summarize in one sentence, split |
+### Step 4: Write each unit file to /tmp/
 
-## Research Protocol
+Use the Write tool to create `/tmp/claude/decompose-<short-descriptor>/unit-01.md`, `unit-02.md`, etc. Each file MUST use this exact template:
 
-When a technical decision needs "research idiomatic approach", search for actual implementations in established repos. Code over opinions.
+```markdown
+# Unit <N>: <Title>
 
-### Reference Projects
+## Description
+<What this unit delivers -- one concern, one commit>
 
-**Go**: hashicorp/consul (HTTP handlers, middleware), hashicorp/vault (storage backends, plugins), cockroachdb/cockroach (SQL layer, store tests), kubernetes/kubernetes (API machinery, DI)
+## Depends On
+<List of prerequisite unit numbers and why, or "None">
 
-**SvelteKit**: sveltejs/kit (routing, hooks, load functions), sveltejs/realworld (full app patterns), huntabyte/shadcn-svelte (component composition, actions)
+## Scope
+### IN
+- <What this unit changes -- list every affected file>
 
-**TypeScript**: effect-ts/effect (error handling, composability), colinhacks/zod (schema validation, type inference), trpc/trpc (end-to-end type safety, API patterns)
+### OUT
+- <What this unit does NOT touch>
 
-**Python**: pallets/flask (routing, blueprints), encode/starlette (async middleware, lifespan), python-attrs/attrs (data modeling), psf/requests (API design, session management)
+## Steps
+1. <Numbered implementation steps, max 8>
 
-### Research Quality
+## Acceptance Criteria
+- <Specific, checkable criteria from the story>
+```
 
-Before accepting research results:
+### Step 5: Verify
 
-- At least 3 real projects cited with file paths
-- Actual code snippets shown (not paraphrased)
-- Pattern consistency noted (do most projects agree?)
-- Skip research when the codebase already has an established pattern or the user gave a specific preference
+Use `Glob` on `/tmp/claude/decompose-<short-descriptor>/unit-*.md` to confirm all files exist. If any are missing, write them now.
 
-## Output Format
+---
 
-The deliverable is unit files written to `/tmp/claude/decompose-<name>/`, not chat prose. Each unit becomes a separate markdown file (`unit-01.md`, `unit-02.md`, etc.) plus a `plan.md` with the summary table. The calling command defines the exact file template -- this skill defines the decomposition rules only.
+## Output
 
-## Evaluation Checklist
+After ALL files are written and verified, show the user:
 
-Before writing the unit files, verify:
+1. The unit table from `plan.md`
+2. The `/tmp/` directory path
 
-- [ ] Every unit has explicit dependencies listed
-- [ ] No circular dependencies exist
-- [ ] Each unit passes the "one concern" test
-- [ ] Each unit can be merged independently without breaking the build
-- [ ] Large units (15+ files) have been flagged for splitting
-- [ ] Research decisions are documented with citations
-- [ ] Acceptance criteria are specific and checkable
+Then end with:
+
+```markdown
+## Next Step
+Units saved to `/tmp/claude/decompose-<name>/`. Run `/implement /tmp/claude/decompose-<name>/unit-01.md` to start.
+```
