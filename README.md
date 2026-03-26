@@ -27,13 +27,14 @@ The review pipeline runs five specialized agents in parallel (complexity, archit
 
 ## Usage
 
-The core workflow chains skills together. Each step waits for your approval before proceeding.
+The core workflow chains skills together. You review the output at every step and run `/clear` before moving on. This keeps the context window focused and puts a human in the loop at every stage.
 
 ```mermaid
 flowchart LR
     A("/brainstorm") --> B("/decompose")
 
     subgraph unit ["for each unit"]
+        direction LR
         C("/implement") --> D("/review") --> E("/document") --> F("/commit")
         F -- next unit --> C
     end
@@ -41,6 +42,19 @@ flowchart LR
     B --> C
     F --> G("/pr")
 ```
+
+### Core Loop
+
+Start with `/decompose story.md` to break a story into unit files stored in `~/.cache/claude-essentials/`. Then work through each unit one at a time:
+
+1. `/implement <unit-file>` to build it. Scan the changes, then `/clear`.
+2. `/review <unit-file>` to run the review agents. Address findings, do a manual diff review, then `/clear`.
+3. `/document <unit-file>` to capture any learnings. Review the docs, then `/clear`.
+4. `/commit` to wrap up the unit.
+
+Repeat for the next unit. When all units are done, run `/pr`.
+
+Every command accepts a full unit file path. You can also pass a partial name like `auth` or `unit-02` and the skill will search `~/.cache/claude-essentials/` to find it. Commands work ad-hoc too: `/review src/` reviews a directory, `/document auth-patterns` documents a topic.
 
 ### Skills
 

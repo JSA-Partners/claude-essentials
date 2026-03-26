@@ -1,12 +1,19 @@
 ---
 description: Capture learnings from implementation into docs/claude, memories, or CLAUDE.md
-argument-hint: [topic]
+argument-hint: <path-to-unit.md | topic>
 allowed-tools: Read, Write, Bash, Grep, Glob
 ---
 
 # Document: $ARGUMENTS
 
-Capture what was learned during the most recent implementation and review cycle. Load `skills/document/reference.md` for file format guidance and examples.
+## Resolve Context
+
+1. If `$ARGUMENTS` is a unit file path (e.g., `~/.cache/claude-essentials/2026-03-26-auth/unit-01.md`), read that file to understand what was implemented. Use its scope to focus the documentation scan.
+2. If `$ARGUMENTS` is a partial or vague reference (e.g., `auth`, `unit-02`), glob `~/.cache/claude-essentials/` to find matching unit files. If exactly one match, use it. If multiple matches, show options via `AskUserQuestion`.
+3. If `$ARGUMENTS` is a topic string (not a file path), use it as the documentation focus area.
+4. If `$ARGUMENTS` is empty, scan uncommitted changes on the current branch to determine what was implemented.
+
+Load `skills/document/reference.md` for file format guidance and examples.
 
 ## Phase 1: Gather Context
 
@@ -38,11 +45,16 @@ Use `AskUserQuestion` if unclear which topic file the content belongs in, or whe
 - Check for duplication with other docs/claude files
 - Confirm no content that belongs in code comments or git messages
 
-## Next Step
+## Output
 
-When documentation is complete, end with:
+When documentation is complete, end with **exactly** this structure:
 
 ```markdown
+## Done
+Learnings captured in [destination file(s)].
+
 ## Next Step
-Ready to commit this unit with `/commit`.
+1. Review the documentation changes
+2. Run `/clear`
+3. Run `/commit`
 ```

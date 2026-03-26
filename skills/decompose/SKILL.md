@@ -1,6 +1,6 @@
 ---
 description: Decompose a plan or user story into single-commit implementation units
-argument-hint: <path-to-plan.md>
+argument-hint: <file-path or prompt>
 allowed-tools: Read, Write, Bash, Glob, Agent
 ---
 
@@ -14,9 +14,9 @@ If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask: "Provide a plan, story, 
 
 ## CRITICAL RULES
 
-1. **All output files go in `/tmp/claude/decompose-<short-descriptor>/`.** Not in the project directory. Not in `docs/`. Always `/tmp/`.
-2. **You MUST write unit files to disk using the Write tool.** The deliverable is files, not chat prose. If you finish this command without calling Write to create unit files in `/tmp/`, you have failed.
-3. **Do not present unit details in chat.** Write them to files instead. The only chat output is the summary table and the next-step path.
+1. **All output files go in `~/.cache/claude-essentials/`.** Not in the project directory. Not in `docs/`. Never `/tmp/`.
+2. **You MUST write unit files to disk using the Write tool.** The deliverable is files, not chat prose. If you finish this command without calling Write to create unit files, you have failed.
+3. **Do not present unit details in chat.** Write them to files instead. The only chat output is the summary table and the next-step block.
 
 ---
 
@@ -45,7 +45,7 @@ If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask: "Provide a plan, story, 
 
 ---
 
-## Phase 2: Decompose and Write Files to /tmp/
+## Phase 2: Decompose and Write Files
 
 Read `skills/decompose/reference.md` for decomposition rules.
 
@@ -57,16 +57,20 @@ Read `skills/decompose/reference.md` for decomposition rules.
 
 ### Step 2: Create the output directory
 
+Derive `<short-descriptor>` from the input: use the filename stem (without extension) if a file was provided, or 2-3 key words from an inline prompt. Use today's date as a prefix for uniqueness.
+
 ```bash
-Bash: mkdir -p /tmp/claude/decompose-<short-descriptor>
+Bash: mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/claude-essentials/<YYYY-MM-DD>-<short-descriptor>"
 ```
 
-### Step 3: Write plan.md to /tmp/
+### Step 3: Write plan.md
 
-Use the Write tool to create `/tmp/claude/decompose-<short-descriptor>/plan.md` containing:
+Use the Write tool to create `~/.cache/claude-essentials/<YYYY-MM-DD>-<short-descriptor>/plan.md` containing:
 
 ```markdown
 # Decomposition: <story title>
+
+**Source**: `<original $ARGUMENTS verbatim -- file path or inline prompt, truncated to ~200 chars>`
 
 | # | Unit | Description | Depends On | Files |
 |---|------|-------------|------------|-------|
@@ -74,9 +78,9 @@ Use the Write tool to create `/tmp/claude/decompose-<short-descriptor>/plan.md` 
 | 2 | <kebab-case-name> | <one sentence> | 1 | ~N |
 ```
 
-### Step 4: Write each unit file to /tmp/
+### Step 4: Write each unit file
 
-Use the Write tool to create `/tmp/claude/decompose-<short-descriptor>/unit-01.md`, `unit-02.md`, etc. Each file MUST use this exact template:
+Use the Write tool to create `unit-01.md`, `unit-02.md`, etc. in the same directory. Each file MUST use this exact template:
 
 ```markdown
 # Unit <N>: <Title>
@@ -103,7 +107,7 @@ Use the Write tool to create `/tmp/claude/decompose-<short-descriptor>/unit-01.m
 
 ### Step 5: Verify
 
-Use `Glob` on `/tmp/claude/decompose-<short-descriptor>/unit-*.md` to confirm all files exist. If any are missing, write them now.
+Use `Glob` on the output directory for `unit-*.md` to confirm all files exist. If any are missing, write them now.
 
 ---
 
@@ -112,11 +116,16 @@ Use `Glob` on `/tmp/claude/decompose-<short-descriptor>/unit-*.md` to confirm al
 After ALL files are written and verified, show the user:
 
 1. The unit table from `plan.md`
-2. The `/tmp/` directory path
+2. The output directory path
 
-Then end with:
+Then end with **exactly** this structure:
 
 ```markdown
+## Done
+N units saved to `~/.cache/claude-essentials/<name>/`.
+
 ## Next Step
-Units saved to `/tmp/claude/decompose-<name>/`. Run `/implement /tmp/claude/decompose-<name>/unit-01.md` to start.
+1. Review the plan and unit files in `~/.cache/claude-essentials/<name>/`
+2. Run `/clear`
+3. Run `/implement ~/.cache/claude-essentials/<name>/unit-01.md`
 ```

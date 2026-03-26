@@ -1,11 +1,18 @@
 ---
 description: Review code with parallel specialized agents, adversarial verification, and mandatory human approval
-argument-hint: [file | path/to/dir]
+argument-hint: <path-to-unit.md | file | dir>
 context: fork
 allowed-tools: Read, Grep, Glob, Bash, Agent
 ---
 
 # Review: $ARGUMENTS
+
+## Resolve Scope
+
+1. If `$ARGUMENTS` is a unit file path (e.g., `~/.cache/claude-essentials/2026-03-26-auth/unit-01.md`), read that file for scope boundaries and review all uncommitted changes matching the unit's **Scope > IN** files.
+2. If `$ARGUMENTS` is a partial or vague reference (e.g., `auth`, `unit-02`), glob `~/.cache/claude-essentials/` to find matching unit files. If exactly one match, use it. If multiple matches, show options via `AskUserQuestion`.
+3. If `$ARGUMENTS` is a file or directory path in the project, review that scope directly (quick mode).
+4. If `$ARGUMENTS` is empty, review all uncommitted changes via `git diff --name-only` (staged and unstaged).
 
 ## Language Detection
 
@@ -52,19 +59,18 @@ After all agents complete and the skeptic-reviewer runs:
 
 Agent review is not final. After presenting findings, ask the user to review and approve. The review is only complete when the user explicitly approves.
 
-## Quick Mode
+## Output
 
-```txt
-/review path/to/file
-```
-
-Skips git diff and reviews only the specified file.
-
-## Next Step
-
-When the user approves the review, end with:
+When the user approves the review, end with **exactly** this structure:
 
 ```markdown
+## Done
+Review complete. N findings (P1: X, P2: Y, P3: Z).
+
 ## Next Step
-Ready to proceed with `/document` to capture learnings.
+1. Address any P1/P2 findings, then do a manual review of the diff
+2. Run `/clear`
+3. Run `/document <path-to-unit-file or topic>`
 ```
+
+Include the full unit file path if one was used for scoping.

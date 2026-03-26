@@ -105,7 +105,7 @@ Before accepting research results:
 
 ## Output Format
 
-The deliverable is unit files written to `/tmp/claude/decompose-<name>/`, not chat prose. Each unit becomes a separate markdown file (`unit-01.md`, `unit-02.md`, etc.) plus a `plan.md` with the summary table. The calling skill defines the exact file template -- this skill defines the decomposition rules only.
+The deliverable is unit files written to `~/.cache/claude-essentials/<YYYY-MM-DD>-<short-descriptor>/`, not chat prose. Each unit becomes a separate markdown file (`unit-01.md`, `unit-02.md`, etc.) plus a `plan.md` with the summary table. The calling skill defines the exact file template -- this skill defines the decomposition rules only.
 
 ## Evaluation Checklist
 

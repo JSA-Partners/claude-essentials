@@ -1,13 +1,17 @@
 ---
 description: Implement one decomposed unit with idiomatic patterns, scope discipline, and quality gates
-argument-hint: <path-to-unit.md or unit-number>
+argument-hint: <path-to-unit.md>
 context: fork
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent
 ---
 
 # Implement: $ARGUMENTS
 
-If `$ARGUMENTS` is a file path (e.g., `/tmp/decompose-auth/unit-01.md`), read that file as the unit description. If it's a number, look for the unit in the current conversation context. If the file is not found or the unit number has no match, use `AskUserQuestion` to request the unit description.
+## Resolve Unit
+
+1. If `$ARGUMENTS` is a file path (e.g., `~/.cache/claude-essentials/2026-03-26-auth/unit-01.md`), read that file as the unit description.
+2. If `$ARGUMENTS` is a partial or vague reference (e.g., `auth`, `unit-02`, `api-routes`), glob `~/.cache/claude-essentials/` to find matching unit files. If exactly one match, use it. If multiple matches, show options via `AskUserQuestion`.
+3. If `$ARGUMENTS` is empty or the file is not found, use `AskUserQuestion` to request the unit file path or a description.
 
 ## Language Detection
 
@@ -41,13 +45,18 @@ Follow the shared implementation workflow defined in `skills/implement/reference
 
 After implementation, run the project's test suite. If tests fail, fix them before completing. There is no point in proceeding to `/review` with failing tests.
 
-## Next Step
+## Output
 
-When implementation and tests pass, end with:
+When implementation and tests pass, end with **exactly** this structure:
 
 ```markdown
+## Done
+Implementation complete. Tests passing.
+
 ## Next Step
-Ready to proceed with `/review`. Unit scope: `<path-to-unit-file>`
+1. Scan the changes for completeness
+2. Run `/clear`
+3. Run `/review <path-to-unit-file>`
 ```
 
-Include the unit file path so `/review` can read it for scope boundaries.
+Include the full unit file path so `/review` can read it for scope boundaries.
