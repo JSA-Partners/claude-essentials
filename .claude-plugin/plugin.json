@@ -1,0 +1,23 @@
+{
+  "name": "essentials",
+  "version": "1.0.0",
+  "description": "Opinionated agents and skills for shipping code.",
+  "author": {
+    "name": "JSA+Partners",
+    "url": "https://jsapartners.co"
+  },
+  "homepage": "https://github.com/JSA-Partners/claude-essentials",
+  "repository": "https://github.com/JSA-Partners/claude-essentials",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "code-review",
+    "commit",
+    "brainstorm",
+    "decompose",
+    "implement",
+    "pull-request",
+    "story",
+    "agents"
+  ]
+}

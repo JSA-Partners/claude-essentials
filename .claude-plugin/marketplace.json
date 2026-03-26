@@ -1,0 +1,35 @@
+{
+  "name": "jsapartners",
+  "owner": {
+    "name": "JSA+Partners",
+    "url": "https://jsapartners.co"
+  },
+  "metadata": {
+    "description": "Claude Code plugins by JSA+Partners.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "essentials",
+      "description": "Opinionated agents and skills for shipping code.",
+      "version": "1.0.0",
+      "author": {
+        "name": "JSA+Partners",
+        "url": "https://jsapartners.co"
+      },
+      "homepage": "https://github.com/JSA-Partners",
+      "source": ".",
+      "license": "MIT",
+      "tags": [
+        "workflow",
+        "code-review",
+        "commit",
+        "brainstorm",
+        "decompose",
+        "implement",
+        "pull-request",
+        "agents"
+      ]
+    }
+  ]
+}
