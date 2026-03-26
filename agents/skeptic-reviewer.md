@@ -4,6 +4,7 @@ description: Adversarial verification of code review findings. Challenges every 
 tools: [Read, Grep, Glob]
 model: opus
 color: red
+effort: high
 ---
 
 # Skeptic Reviewer

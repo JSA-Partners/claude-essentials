@@ -1,7 +1,7 @@
 ---
 name: complexity-reviewer
 description: Reviews code for complexity violations (YAGNI, AHA, Rule of Three, SRP, DAMP, SOLID, DRY). Use proactively after code changes or on-demand for reviews.
-tools: [Read, Grep, Glob, Bash]
+tools: [Read, Grep, Glob]
 model: opus
 color: orange
 ---

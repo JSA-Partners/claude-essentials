@@ -4,6 +4,7 @@ description: Reviews Svelte 5/SvelteKit code for idiomatic patterns, citing offi
 tools: [Read, Grep, Glob, WebSearch, WebFetch]
 model: opus
 color: orange
+effort: high
 ---
 
 # Svelte Idiom Reviewer

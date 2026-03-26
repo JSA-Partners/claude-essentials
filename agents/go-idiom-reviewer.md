@@ -4,6 +4,7 @@ description: Reviews Go code for idiomatic patterns, citing Effective Go and off
 tools: [Read, Grep, Glob, WebSearch, WebFetch]
 model: opus
 color: blue
+effort: high
 ---
 
 # Go Idiom Reviewer
@@ -178,7 +179,7 @@ Focus on high-impact issues. Skip minor style issues unless they indicate deeper
 
 ## Authoritative References
 
-**When uncertain, use WebSearch/WebFetch to consult these sources. Do NOT rely on training data for Go idioms.**
+**When uncertain, use WebSearch/WebFetch to consult these sources. Do NOT rely on training data for Go idioms.** If no authoritative source confirms a pattern is wrong, do NOT flag it.
 
 ### Official (Primary Authority)
 
