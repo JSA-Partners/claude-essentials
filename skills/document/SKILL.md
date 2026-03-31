@@ -2,7 +2,7 @@
 description: Capture learnings from implementation into project docs, memories, or CLAUDE.md
 when_to_use: When the user wants to document what was learned, save decisions, or update project docs after implementation
 argument-hint: <path-to-unit.md | topic>
-allowed-tools: Read, Write, Bash, Grep, Glob
+allowed-tools: Read, Write, Edit, Bash, Grep, Glob
 ---
 
 # Document: $ARGUMENTS
@@ -18,13 +18,21 @@ Load `${CLAUDE_SKILL_DIR}/reference.md` for file format guidance and examples.
 
 ## Phase 1: Gather Context
 
-Look at the current branch's changes, review findings, and decisions made during implementation. Focus on knowledge that is NOT derivable from reading the code or git history:
+Scan the current branch for what was implemented:
+
+1. Run `git diff main --name-only` to identify changed files
+2. Run `git log main..HEAD --oneline` to see commit history
+3. Read the changed files to understand the implementation
+
+Focus on knowledge that is NOT derivable from reading the code or git history:
 
 - Architectural patterns and their rationale
 - Non-obvious gotchas or constraints discovered
 - Decisions made and why (especially rejected alternatives)
 - Step-by-step guides for recurring tasks
 - Style rules enforced by tooling
+
+IMPORTANT: Do NOT document anything derivable from reading the code, git history, or existing CLAUDE.md. If you can learn it by running `git log` or reading the source, it does not belong in a reference doc.
 
 ## Phase 2: Choose Destination
 
@@ -36,9 +44,15 @@ Tiered by significance:
 
 ## Phase 3: Write
 
-Read the existing topic file first (if one exists). Integrate new content into the existing structure rather than appending a dated entry.
+IMPORTANT: One file per topic area, not per session. Read the existing topic file first (if one exists). Integrate new content into the existing structure. Do NOT append dated entries or create a new file when the topic already has one -- edit the existing file instead.
 
 Use `AskUserQuestion` if unclear which topic file the content belongs in, or whether to create a new one.
+
+### When Things Go Wrong
+
+- **Docs directory does not exist**: Search for an alternative (`docs/`, `.claude/docs/`). If nothing exists, confirm with the user before creating `docs/claude/`.
+- **Content overlaps two topic files**: Pick the primary file, add a cross-reference to the other.
+- **Topic does not fit existing files**: Create a new topic file. Do not force content into an unrelated file.
 
 ## Phase 4: Verify
 
