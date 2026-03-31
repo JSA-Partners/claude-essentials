@@ -34,6 +34,36 @@ Detect the project language from CLAUDE.md `Tech Stack` section or file extensio
 | IDIOM_REVIEWER  | svelte-idiom-reviewer |
 | FILE_EXTENSIONS | `.svelte`, `.ts`, `.js` files (include `*.test.ts` only if explicitly reviewing tests) |
 
+### Python
+
+| Parameter       | Value                    |
+| --------------- | ------------------------ |
+| LANGUAGE        | Python                   |
+| IDIOM_REVIEWER  | python-idiom-reviewer    |
+| FILE_EXTENSIONS | `.py` files (include `test_*.py` / `*_test.py` only if explicitly reviewing tests) |
+
+### TypeScript
+
+| Parameter       | Value                      |
+| --------------- | -------------------------- |
+| LANGUAGE        | TypeScript                 |
+| IDIOM_REVIEWER  | typescript-idiom-reviewer  |
+| FILE_EXTENSIONS | `.ts`, `.tsx` files (include `*.test.ts`, `*.spec.ts` only if explicitly reviewing tests) |
+
+### Default (Fallback)
+
+If the project language does not match any of the above, use the general-purpose reviewer:
+
+| Parameter       | Value                    |
+| --------------- | ------------------------ |
+| LANGUAGE        | (detected language)      |
+| IDIOM_REVIEWER  | general-idiom-reviewer   |
+| FILE_EXTENSIONS | (all changed files)      |
+
+### Detection Order
+
+Check in this order: Go > Svelte > Python > TypeScript > Default. Svelte takes priority over TypeScript because Svelte projects contain `.ts` files. Detection checks CLAUDE.md `Tech Stack` first, then marker files (`go.mod`, `svelte.config.*`, `pyproject.toml`/`setup.py`, `tsconfig.json`).
+
 ### Large Scope Filter (Svelte only)
 
 When scope > 10 files, offer language-specific filters:

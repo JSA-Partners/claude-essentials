@@ -84,12 +84,15 @@ Every command accepts a full unit file path. You can also pass a partial name li
 | ----- | ------- |
 | `architecture-advisor` | Identifies superior design patterns. Conservative, only flags high-confidence issues. |
 | `complexity-reviewer` | Reviews code for YAGNI, AHA, Rule of Three, SRP, DAMP, SOLID, DRY violations. |
+| `general-idiom-reviewer` | Reviews code for idiomatic patterns in any language by dynamically researching conventions. |
 | `go-idiom-reviewer` | Reviews Go code for idiomatic patterns, citing Effective Go. |
+| `python-idiom-reviewer` | Reviews Python code for idiomatic patterns, citing PEP standards. |
 | `scope-reviewer` | Detects scope creep by tracing implementations to user stories. |
 | `skeptic-reviewer` | Adversarial verification of other agents' findings. Eliminates false positives. |
 | `story-drafter` | Converts feature ideas into implementable user stories with acceptance criteria. |
 | `story-estimator` | Estimates story points using Fibonacci scale with codebase analysis. |
 | `svelte-idiom-reviewer` | Reviews Svelte 5/SvelteKit code for idiomatic patterns. |
+| `typescript-idiom-reviewer` | Reviews TypeScript code for idiomatic patterns, citing the TypeScript Handbook. |
 | `technical-reviewer` | Reviews code for security vulnerabilities, performance issues, data integrity risks. |
 
 ## Resources

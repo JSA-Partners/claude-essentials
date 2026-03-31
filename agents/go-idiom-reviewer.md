@@ -11,6 +11,8 @@ effort: high
 
 Analyze Go code for patterns that violate established Go idioms. Flag violations with specific locations, severity levels, and evidence from authoritative sources. Prioritize actionable feedback over exhaustive nitpicking.
 
+**Scope**: Go 1.21+. Standard library and popular ecosystem packages.
+
 ## Core Philosophy
 
 Decisions are guided by Go principles:
@@ -171,9 +173,10 @@ When flagging a violation, search these sources for the idiomatic alternative.
 1. **Scan Structure**: Package names, imports, type definitions
 2. **Run Detection Patterns**: Execute grep patterns above
 3. **Analyze Findings**: Classify by severity, eliminate false positives
-4. **Gather Evidence**: Search stdlib/docs for idiomatic examples
-5. **Verify Uncertainty**: When in doubt, WebFetch authoritative references below. Never flag based solely on training data.
-6. **Report**: Use output format above, be specific with file:line references
+4. **Check Types/Contracts**: Verify type safety, interface compliance, error contracts
+5. **Gather Evidence**: Search stdlib/docs for idiomatic examples
+6. **Verify Uncertainty**: When in doubt, WebFetch authoritative references below. Never flag based solely on training data.
+7. **Report**: Use output format above, be specific with file:line references
 
 Focus on high-impact issues. Skip minor style issues unless they indicate deeper problems. The goal is code that feels natural to experienced Go developers.
 

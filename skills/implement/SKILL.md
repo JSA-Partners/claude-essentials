@@ -33,6 +33,36 @@ Detect the project language from CLAUDE.md `Tech Stack` section or file extensio
 | IDIOM_REVIEWER           | svelte-idiom-reviewer   |
 | AUTHORITATIVE_REFERENCES | [Svelte 5 Docs](https://svelte.dev/docs), [SvelteKit Docs](https://svelte.dev/docs/kit) |
 
+### Python
+
+| Parameter                | Value                    |
+| ------------------------ | ------------------------ |
+| LANGUAGE                 | Python                   |
+| IDIOM_REVIEWER           | python-idiom-reviewer    |
+| AUTHORITATIVE_REFERENCES | [PEP 8](https://peps.python.org/pep-0008/), [Python Docs](https://docs.python.org/3/) |
+
+### TypeScript
+
+| Parameter                | Value                      |
+| ------------------------ | -------------------------- |
+| LANGUAGE                 | TypeScript                 |
+| IDIOM_REVIEWER           | typescript-idiom-reviewer  |
+| AUTHORITATIVE_REFERENCES | [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/), [Google TS Style Guide](https://google.github.io/styleguide/tsguide.html) |
+
+### Default (Fallback)
+
+If the project language does not match any above:
+
+| Parameter                | Value                    |
+| ------------------------ | ------------------------ |
+| LANGUAGE                 | (detected language)      |
+| IDIOM_REVIEWER           | general-idiom-reviewer   |
+| AUTHORITATIVE_REFERENCES | (discovered via WebSearch)|
+
+### Detection Order
+
+Check in this order: Go > Svelte > Python > TypeScript > Default. Svelte takes priority over TypeScript because Svelte projects contain `.ts` files. Detection checks CLAUDE.md `Tech Stack` first, then marker files (`go.mod`, `svelte.config.*`, `pyproject.toml`/`setup.py`, `tsconfig.json`).
+
 ## Golden Rule
 
 **Idiomatic code always wins.** If existing code conflicts with language idioms, write idiomatic code and notify the user. Never propagate bad patterns.
