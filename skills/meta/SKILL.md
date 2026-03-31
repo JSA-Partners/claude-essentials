@@ -25,8 +25,8 @@ Examples:
 
 Load for comprehensive quality criteria:
 
-- `skills/sharpen/reference.md` - Quality checklists, anti-patterns, scoring
-- `skills/sharpen/patterns.md` - Structural templates
+- `${CLAUDE_SKILL_DIR}/../sharpen/reference.md` - Quality checklists, anti-patterns, scoring
+- `${CLAUDE_SKILL_DIR}/../sharpen/patterns.md` - Structural templates
 
 ---
 
@@ -41,9 +41,9 @@ Load for comprehensive quality criteria:
    - Skill design principles
    - Quality gates or verification steps
 3. **Identify where insights apply** in:
-   - `skills/sharpen/SKILL.md` (main skill)
-   - `skills/sharpen/reference.md` (quality checklists)
-   - `skills/sharpen/patterns.md` (templates)
+   - `${CLAUDE_SKILL_DIR}/../sharpen/SKILL.md` (main skill)
+   - `${CLAUDE_SKILL_DIR}/../sharpen/reference.md` (quality checklists)
+   - `${CLAUDE_SKILL_DIR}/../sharpen/patterns.md` (templates)
    - Other skills/agents if the pattern applies broadly
 4. **Present proposed changes** with rationale
 5. **Apply changes** after user approval

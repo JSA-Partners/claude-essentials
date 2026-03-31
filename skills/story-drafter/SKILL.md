@@ -30,7 +30,7 @@ If any element is unclear: **Stop and ask.**
 
 ## Pattern Selection
 
-Match story type to patterns in `skills/story-drafter/patterns/`:
+Match story type to patterns in `${CLAUDE_SKILL_DIR}/patterns/`:
 
 | Story Type     | Template            | Signals                              |
 | -------------- | ------------------- | ------------------------------------ |

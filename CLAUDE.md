@@ -43,3 +43,4 @@ Husky hooks run automatically on commit (markdownlint + commitlint).
 
 - Do not add `Bash` to agent tools unless the agent genuinely needs shell execution
 - Do not inline large examples in agents. Move them to skills.
+- Do not use hardcoded paths like `skills/foo/reference.md` in SKILL.md files. Use `${CLAUDE_SKILL_DIR}/reference.md` instead.

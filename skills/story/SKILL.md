@@ -12,9 +12,9 @@ Create user stories through agent collaboration.
 
 Load on-demand for detailed patterns:
 
-- `skills/story-drafter/SKILL.md` - Core formula, confidence threshold
-- `skills/story-drafter/personas.md` - Approved personas
-- `skills/story-drafter/patterns/` - Acceptance criteria patterns by story type
+- `${CLAUDE_SKILL_DIR}/../story-drafter/SKILL.md` - Core formula, confidence threshold
+- `${CLAUDE_SKILL_DIR}/../story-drafter/personas.md` - Approved personas
+- `${CLAUDE_SKILL_DIR}/../story-drafter/patterns/` - Acceptance criteria patterns by story type
 
 Load `patterns/` directory files only after template selection in Phase 2.
 
@@ -31,9 +31,9 @@ Run `story-drafter` agent with user input.
 
 | Responsibility | Detail                                                     |
 | -------------- | ---------------------------------------------------------- |
-| Load skill     | Read `skills/story-drafter/SKILL.md`             |
+| Load skill     | Read `${CLAUDE_SKILL_DIR}/../story-drafter/SKILL.md` |
 | Assess clarity | All 3 elements clear? (action, user, value)                |
-| Select pattern | Match to `skills/story-drafter/patterns/` folder |
+| Select pattern | Match to `${CLAUDE_SKILL_DIR}/../story-drafter/patterns/` folder |
 | Ask if unclear | Unlimited focused questions, no assumptions                |
 | Output         | Story + acceptance criteria                                |
 

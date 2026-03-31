@@ -69,7 +69,7 @@ Check in this order: Go > Svelte > Python > TypeScript > Default. Svelte takes p
 
 ## Workflow
 
-Follow the shared implementation workflow defined in `skills/implement/reference.md`, substituting the detected language parameters.
+Follow the shared implementation workflow defined in `${CLAUDE_SKILL_DIR}/reference.md`, substituting the detected language parameters.
 
 ## Tests
 

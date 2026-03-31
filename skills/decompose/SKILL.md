@@ -10,7 +10,7 @@ If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask: "Provide a plan, story, 
 
 ## Skill Reference
 
-- `skills/decompose/reference.md` - Decomposition rules and evaluation checklist
+- `${CLAUDE_SKILL_DIR}/reference.md` - Decomposition rules and evaluation checklist
 
 ## CRITICAL RULES
 
@@ -47,13 +47,13 @@ If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask: "Provide a plan, story, 
 
 ## Phase 2: Decompose and Write Files
 
-Read `skills/decompose/reference.md` for decomposition rules.
+Read `${CLAUDE_SKILL_DIR}/reference.md` for decomposition rules.
 
 ### Step 1: Plan the units (internal only, do not output to chat)
 
 - Identify units -- each unit is one commit: one concern, independently mergeable
 - Order by dependency -- strict topological sort
-- Verify against the evaluation checklist in `skills/decompose/reference.md`
+- Verify against the evaluation checklist in `${CLAUDE_SKILL_DIR}/reference.md`
 
 ### Step 2: Create the output directory
 

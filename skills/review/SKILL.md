@@ -75,7 +75,7 @@ When scope > 10 files, offer language-specific filters:
 
 ## Workflow
 
-Follow the shared review workflow defined in `skills/review/reference.md`, substituting the detected language parameters.
+Follow the shared review workflow defined in `${CLAUDE_SKILL_DIR}/reference.md`, substituting the detected language parameters.
 
 ## Transparency
 

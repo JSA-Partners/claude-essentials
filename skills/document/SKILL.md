@@ -13,7 +13,7 @@ allowed-tools: Read, Write, Bash, Grep, Glob
 3. If `$ARGUMENTS` is a topic string (not a file path), use it as the documentation focus area.
 4. If `$ARGUMENTS` is empty, scan uncommitted changes on the current branch to determine what was implemented.
 
-Load `skills/document/reference.md` for file format guidance and examples.
+Load `${CLAUDE_SKILL_DIR}/reference.md` for file format guidance and examples.
 
 ## Phase 1: Gather Context
 

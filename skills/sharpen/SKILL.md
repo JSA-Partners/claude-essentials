@@ -20,8 +20,8 @@ This ensures we collaborate on improvements rather than making premature changes
 
 Load on-demand for comprehensive expertise:
 
-- `skills/sharpen/reference.md` - Verified internals, prompt engineering patterns, quality checklists
-- `skills/sharpen/patterns.md` - Reusable templates for skills and agents
+- `${CLAUDE_SKILL_DIR}/reference.md` - Verified internals, prompt engineering patterns, quality checklists
+- `${CLAUDE_SKILL_DIR}/patterns.md` - Reusable templates for skills and agents
 
 ---
 
@@ -50,7 +50,7 @@ Do not proceed without plan mode active.
 
 ### Phase 2: Research Current Best Practices
 
-Load `skills/sharpen/reference.md` first -- it contains verified knowledge about how Claude Code processes skills and agents internally, plus proven prompt engineering patterns. Then search for anything new:
+Load `${CLAUDE_SKILL_DIR}/reference.md` first -- it contains verified knowledge about how Claude Code processes skills and agents internally, plus proven prompt engineering patterns. Then search for anything new:
 
 ```txt
 Use WebSearch tool with queries like:
@@ -74,7 +74,7 @@ Before suggesting ANY improvements, use AskUserQuestion to understand:
 Based on scope from $ARGUMENTS:
 
 1. Read all relevant configuration files
-2. Load `skills/sharpen/reference.md` for quality checklists
+2. Load `${CLAUDE_SKILL_DIR}/reference.md` for quality checklists
 3. Score each artifact against the checklists (0-10)
 4. Identify gaps, anti-patterns, and opportunities
 5. **Do NOT suggest fixes yet** - present findings first
@@ -128,7 +128,7 @@ For each approved improvement:
 
 1. Make the specific change
 2. Explain what was changed and why
-3. Verify the change follows patterns from `skills/sharpen/patterns.md`
+3. Verify the change follows patterns from `${CLAUDE_SKILL_DIR}/patterns.md`
 
 **File Creation Authority**: You may create new files (skills, agents) if beneficial. Always explain why and get approval first.
 
