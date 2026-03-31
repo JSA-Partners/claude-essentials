@@ -1,5 +1,7 @@
 ---
 description: Generate a commit message matching the project's conventions, defaulting to conventional commits
+when_to_use: When the user asks to commit, create a commit, or save changes to git
+argument-hint: "[files to stage]"
 disable-model-invocation: true
 allowed-tools: Bash, Read
 ---
@@ -27,10 +29,21 @@ Run `git status --porcelain` to check working directory state.
 
 ### Step 2: Learn Project Style
 
+IMPORTANT: This step determines correctness. Get the convention wrong and hooks will reject the commit.
+
 Run in parallel:
 
-- `git log --oneline -20` - analyze recent commits for patterns
-- `git diff --cached` - understand the staged changes
+- `git log --oneline -20` -- analyze recent commits for patterns
+- `git diff --cached` -- understand the staged changes
+- Check for commitlint config (`.commitlintrc.*`, `commitlint.config.*`, or `commitlint` key in `package.json`)
+- Check CLAUDE.md for commit conventions
+
+**Determine convention (in priority order):**
+
+1. **Commitlint config** -- if present, this is the enforced standard. Extract allowed types, scopes, and rules.
+2. **CLAUDE.md instructions** -- project-specific overrides
+3. **Git history** -- if the majority of recent commits follow a recognizable convention, match it
+4. **Default** -- if no clear convention exists, use conventional commits (see Quick Reference below)
 
 **Extract from history:**
 
@@ -39,11 +52,6 @@ Run in parallel:
 - Description style (length, wording patterns)
 - Whether bodies are commonly used
 - Any custom types beyond standard ones
-
-**Determine convention:**
-
-- If the majority of recent commits follow a recognizable convention, match it
-- If no clear convention exists or the history is sparse, default to conventional commits (see Quick Reference below)
 
 ### Step 3: Generate Message
 
@@ -59,7 +67,7 @@ Run in parallel:
 - Skip body unless change is complex or non-obvious
 - Include footer only for breaking changes or issue refs
 
-**Validate the message** against the detected convention. For conventional commits, validate:
+IMPORTANT: **Validate the message** against the detected convention before presenting it. For conventional commits, validate:
 
 - Type: `feat|fix|docs|style|refactor|perf|test|build|ci|chore`
 - Description: imperative, lowercase, no period, <50 chars
@@ -84,6 +92,23 @@ BREAKING CHANGE: details
 EOF
 )"
 ```
+
+### Step 5: Handle Failures
+
+If the commit fails (e.g., hook rejection, commitlint error):
+
+1. Read the error output carefully
+2. Diagnose the specific rule violation (wrong type, bad scope, description too long, etc.)
+3. Fix the message to satisfy the rule
+4. Retry the commit once
+
+Do NOT retry with the same message. Do NOT bypass hooks with `--no-verify`.
+
+## Anti-Patterns
+
+- Do NOT write multi-paragraph bodies for trivial changes. Body is for "why", not "what".
+- Do NOT guess scope when unsure -- omit it instead. `feat: add login` beats `feat(auth): add login` when the scope is ambiguous.
+- Do NOT add trailers (Co-Authored-By, Signed-off-by) unless the project convention requires them.
 
 ## Quick Reference (Conventional Commits Default)
 
