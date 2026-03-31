@@ -30,7 +30,7 @@ If scope > 10 files, use `AskUserQuestion`: "Found [N] files. Review all or focu
 
 ### Unit-Scoped Review
 
-If the changes were produced by `/implement` from a decomposed unit file, read the unit file to establish scope boundaries. Pass the unit's **Scope > IN**, **Scope > OUT**, and **Acceptance Criteria** sections to the `scope-reviewer` agent. The scope-reviewer must only check the unit's acceptance criteria, not the full parent story. Work belonging to other units is intentionally deferred and must not be flagged.
+If the changes were produced by `/essentials:implement` from a decomposed unit file, read the unit file to establish scope boundaries. Pass the unit's **Scope > IN**, **Scope > OUT**, and **Acceptance Criteria** sections to the `scope-reviewer` agent. The scope-reviewer must only check the unit's acceptance criteria, not the full parent story. Work belonging to other units is intentionally deferred and must not be flagged.
 
 ### Phase 2: Parallel Review
 

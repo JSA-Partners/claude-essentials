@@ -23,11 +23,11 @@ Plays are attention anchors. Single words that decompress into behavioral specs 
 
 ## Modes
 
-### No args (`/playbook`)
+### No args (`/essentials:playbook`)
 
-Display the Quick Reference table and list each play with its description. Let the user pick by running `/playbook [play]`.
+Display the Quick Reference table and list each play with its description. Let the user pick by running `/essentials:playbook [play]`.
 
-### With arg (`/playbook [play]`)
+### With arg (`/essentials:playbook [play]`)
 
 Activate that play. Steering plays inject behavior going forward. Execution plays run immediately.
 

@@ -73,7 +73,7 @@ Follow the shared implementation workflow defined in `skills/implement/reference
 
 ## Tests
 
-After implementation, run the project's test suite. If tests fail, fix them before completing. There is no point in proceeding to `/review` with failing tests.
+After implementation, run the project's test suite. If tests fail, fix them before completing. There is no point in proceeding to `/essentials:review` with failing tests.
 
 ## Output
 
@@ -86,7 +86,7 @@ Implementation complete. Tests passing.
 ## Next Step
 1. Scan the changes for completeness
 2. Run `/clear`
-3. Run `/review <path-to-unit-file>`
+3. Run `/essentials:review <path-to-unit-file>`
 ```
 
-Include the full unit file path so `/review` can read it for scope boundaries.
+Include the full unit file path so `/essentials:review` can read it for scope boundaries.

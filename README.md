@@ -23,8 +23,8 @@ The review pipeline runs five specialized agents in parallel (complexity, archit
 ### Dependencies
 
 - Git
-- [GitHub CLI](https://cli.github.com/) (`gh`) for `/pr`
-- A `CLAUDE.md` in your project root (run `/init` to generate one)
+- [GitHub CLI](https://cli.github.com/) (`gh`) for `/essentials:pr`
+- A `CLAUDE.md` in your project root (run `/essentials:init` to generate one)
 
 ```bash
 /plugin marketplace add JSA-Partners/claude-essentials
@@ -37,46 +37,46 @@ The core workflow chains skills together. You review the output at every step an
 
 ```mermaid
 flowchart LR
-    A("/story") --> B("/decompose")
+    A("/essentials:story") --> B("/essentials:decompose")
 
     subgraph unit ["for each unit"]
         direction LR
-        C("/implement") --> D("/review") --> E("/document") --> F("/commit")
+        C("/essentials:implement") --> D("/essentials:review") --> E("/essentials:document") --> F("/essentials:commit")
         F -- next unit --> C
     end
 
     B --> C
-    F --> G("/pr")
+    F --> G("/essentials:pr")
 ```
 
 ### Core Loop
 
-Start with `/decompose story.md` to break a story into unit files stored in `~/.cache/claude-essentials/`. Then work through each unit one at a time:
+Start with `/essentials:decompose story.md` to break a story into unit files stored in `~/.cache/claude-essentials/`. Then work through each unit one at a time:
 
-1. `/implement <unit-file>` to build it. Scan the changes, then `/clear`.
-2. `/review <unit-file>` to run the review agents. Address findings, do a manual diff review, then `/clear`.
-3. `/document <unit-file>` to capture any learnings. Review the docs, then `/clear`.
-4. `/commit` to wrap up the unit.
+1. `/essentials:implement <unit-file>` to build it. Scan the changes, then `/clear`.
+2. `/essentials:review <unit-file>` to run the review agents. Address findings, do a manual diff review, then `/clear`.
+3. `/essentials:document <unit-file>` to capture any learnings. Review the docs, then `/clear`.
+4. `/essentials:commit` to wrap up the unit.
 
-Repeat for the next unit. When all units are done, run `/pr`.
+Repeat for the next unit. When all units are done, run `/essentials:pr`.
 
-Every command accepts a full unit file path. You can also pass a partial name like `auth` or `unit-02` and the skill will search `~/.cache/claude-essentials/` to find it. Commands work ad-hoc too: `/review src/` reviews a directory, `/document auth-patterns` documents a topic.
+Every command accepts a full unit file path. You can also pass a partial name like `auth` or `unit-02` and the skill will search `~/.cache/claude-essentials/` to find it. Commands work ad-hoc too: `/essentials:review src/` reviews a directory, `/essentials:document auth-patterns` documents a topic.
 
 ### Skills
 
 | Skill | Purpose |
 | ----- | ------- |
-| `/story` | Create user stories through agent collaboration. |
-| `/commit` | Generate commit messages matching project patterns. Defaults to conventional commits. |
-| `/decompose` | Decompose a plan or user story into single-commit implementation units. |
-| `/document` | Capture learnings from implementation into project docs, memories, or CLAUDE.md. |
-| `/implement` | Implement one decomposed unit with idiomatic patterns and quality gates. |
-| `/init` | Generate a CLAUDE.md for the current project based on codebase analysis. |
-| `/meta` | Update the /sharpen skill with new resources. |
-| `/playbook` | Inject behavioral plays and execution protocols. |
-| `/pr` | Create a GitHub PR matching project conventions. Requires `gh` CLI. |
-| `/review` | Review code with parallel specialized agents, adversarial verification, and human approval. |
-| `/sharpen` | Systematically improve skills and agents using proven patterns. |
+| `/essentials:story` | Create user stories through agent collaboration. |
+| `/essentials:commit` | Generate commit messages matching project patterns. Defaults to conventional commits. |
+| `/essentials:decompose` | Decompose a plan or user story into single-commit implementation units. |
+| `/essentials:document` | Capture learnings from implementation into project docs, memories, or CLAUDE.md. |
+| `/essentials:implement` | Implement one decomposed unit with idiomatic patterns and quality gates. |
+| `/essentials:init` | Generate a CLAUDE.md for the current project based on codebase analysis. |
+| `/essentials:meta` | Update the /essentials:sharpen skill with new resources. |
+| `/essentials:playbook` | Inject behavioral plays and execution protocols. |
+| `/essentials:pr` | Create a GitHub PR matching project conventions. Requires `gh` CLI. |
+| `/essentials:review` | Review code with parallel specialized agents, adversarial verification, and human approval. |
+| `/essentials:sharpen` | Systematically improve skills and agents using proven patterns. |
 
 ### Agents
 

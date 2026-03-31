@@ -127,5 +127,5 @@ N units saved to `~/.cache/claude-essentials/<name>/`.
 ## Next Step
 1. Review the plan and unit files in `~/.cache/claude-essentials/<name>/`
 2. Run `/clear`
-3. Run `/implement ~/.cache/claude-essentials/<name>/unit-01.md`
+3. Run `/essentials:implement ~/.cache/claude-essentials/<name>/unit-01.md`
 ```

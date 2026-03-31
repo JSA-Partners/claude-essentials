@@ -1,12 +1,12 @@
 ---
-description: Update the /sharpen skill with new resources or improvements
+description: Update the /essentials:sharpen skill with new resources or improvements
 argument-hint: <url-or-change-description>
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch
 ---
 
 # Meta
 
-Update the `/sharpen` skill based on new resources or requested changes.
+Update the `/essentials:sharpen` skill based on new resources or requested changes.
 
 ## Input: $ARGUMENTS
 
@@ -16,8 +16,8 @@ If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask: "What would you like to 
 
 Examples:
 
-- `/meta https://addyosmani.com/blog/ai-coding-workflow/`
-- `/meta Add a phase for checking hook compatibility`
+- `/essentials:meta https://addyosmani.com/blog/ai-coding-workflow/`
+- `/essentials:meta Add a phase for checking hook compatibility`
 
 ---
 
@@ -94,7 +94,7 @@ This skill creates a **self-improving loop**:
 
 ```markdown
 New insights → Update sharpen skill → Better checklists →
-Better /sharpen evaluations → Higher quality artifacts
+Better /essentials:sharpen evaluations → Higher quality artifacts
 ```
 
 **Scope of influence**:

@@ -56,5 +56,5 @@ Learnings captured in [destination file(s)].
 ## Next Step
 1. Review the documentation changes
 2. Run `/clear`
-3. Run `/commit`
+3. Run `/essentials:commit`
 ```

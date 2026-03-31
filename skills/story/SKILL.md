@@ -102,5 +102,5 @@ When the story is created, end with:
 
 ```markdown
 ## Next Step
-Ready to break this down. Run `/decompose` to create implementation units.
+Ready to break this down. Run `/essentials:decompose` to create implementation units.
 ```

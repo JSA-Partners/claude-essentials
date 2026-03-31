@@ -37,7 +37,7 @@ Husky hooks run automatically on commit (markdownlint + commitlint).
 
 - `README.md` - Plugin install instructions, component catalog
 - `skills/sharpen/reference.md` - Quality checklists for agents and skills
-- `/meta` - Update the /sharpen skill with new resources or improvements
+- `/essentials:meta` - Update the /essentials:sharpen skill with new resources or improvements
 
 ## Common Mistakes
 

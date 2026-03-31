@@ -100,7 +100,7 @@ Review complete. N findings (P1: X, P2: Y, P3: Z).
 ## Next Step
 1. Address any P1/P2 findings, then do a manual review of the diff
 2. Run `/clear`
-3. Run `/document <path-to-unit-file or topic>`
+3. Run `/essentials:document <path-to-unit-file or topic>`
 ```
 
 Include the full unit file path if one was used for scoping.
