@@ -1,5 +1,6 @@
 ---
 description: Improve Claude Code skills and agents using proven patterns
+when_to_use: When the user wants to audit, score, or improve skills and agents in this plugin
 argument-hint: [component | skills | agents | --all]
 allowed-tools: Read, Write, Edit, Grep, Glob, WebSearch
 ---

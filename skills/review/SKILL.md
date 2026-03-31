@@ -1,5 +1,6 @@
 ---
 description: Review code with parallel specialized agents, adversarial verification, and mandatory human approval
+when_to_use: When the user asks for a code review, review my changes, or check code quality
 argument-hint: <path-to-unit.md | file | dir>
 context: fork
 allowed-tools: Read, Grep, Glob, Bash, Agent

@@ -1,5 +1,6 @@
 ---
 description: Capture learnings from implementation into project docs, memories, or CLAUDE.md
+when_to_use: When the user wants to document what was learned, save decisions, or update project docs after implementation
 argument-hint: <path-to-unit.md | topic>
 allowed-tools: Read, Write, Bash, Grep, Glob
 ---

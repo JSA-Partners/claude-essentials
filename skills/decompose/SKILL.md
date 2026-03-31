@@ -1,5 +1,6 @@
 ---
 description: Decompose a plan or user story into single-commit implementation units
+when_to_use: When the user has a plan or story and wants to break it into implementable units
 argument-hint: <file-path or prompt>
 allowed-tools: Read, Write, Bash, Glob, Agent
 ---

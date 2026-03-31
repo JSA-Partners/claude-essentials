@@ -1,5 +1,6 @@
 ---
 description: Implement one decomposed unit with idiomatic patterns, scope discipline, and quality gates
+when_to_use: When the user wants to implement a decomposed unit file from /essentials:decompose
 argument-hint: <path-to-unit.md>
 context: fork
 allowed-tools: Read, Write, Edit, Bash, Grep, Glob, Agent

@@ -1,5 +1,6 @@
 ---
 description: Generate a CLAUDE.md for the current project
+when_to_use: When the user wants to set up Claude Code for a project or initialize CLAUDE.md
 allowed-tools: Read, Write, Glob
 ---
 

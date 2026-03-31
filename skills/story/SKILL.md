@@ -1,5 +1,6 @@
 ---
 description: Create user stories through agent collaboration
+when_to_use: When the user describes a feature, enhancement, or change they want to build
 argument-hint: [feature description]
 allowed-tools: Read, Write, Glob, Agent
 ---
