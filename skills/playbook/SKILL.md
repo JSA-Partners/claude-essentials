@@ -1,7 +1,6 @@
 ---
-description: >
-  Inject behavioral plays and execution protocols.
-  Run without args to see all plays, with a play name to activate it.
+description: Inject behavioral plays and execution protocols. Run without args to see all plays, with a play name to activate it.
+when_to_use: When the user is retrying failures without diagnosing, using vague quality terms, returning after a gap, or needs pre-push checks
 argument-hint: "[taste | diagnose | scope | reorient | preflight | defer]"
 allowed-tools: Read, Grep, Glob, Bash
 ---
@@ -21,15 +20,16 @@ Plays are attention anchors. Single words that decompress into behavioral specs 
 | **preflight** | execution | Local CI checks before pushing, project-aware |
 | **defer** | execution | Track skipped review items visibly |
 
-## Modes
+## Input: $ARGUMENTS
 
-### No args (`/essentials:playbook`)
+| Argument | Mode | Description |
+|----------|------|-------------|
+| _(empty)_ | Interactive | Display Quick Reference and let user pick a play |
+| `<play>` | Direct | Activate the named play immediately |
 
-Display the Quick Reference table and list each play with its description. Let the user pick by running `/essentials:playbook [play]`.
+If `$ARGUMENTS` is empty, display the Quick Reference table above and prompt the user to pick a play.
 
-### With arg (`/essentials:playbook [play]`)
-
-Activate that play. Steering plays inject behavior going forward. Execution plays run immediately.
+If `$ARGUMENTS` names a play, activate it. Steering plays inject behavior going forward. Execution plays run immediately.
 
 ---
 
@@ -82,7 +82,7 @@ Re-entry after a gap. Run in parallel and present a status summary:
 1. `git log --oneline -15` for recent commits
 2. `git status` for uncommitted work
 3. `git stash list` for stashed work
-4. Search for plan or decomposition files in `~/.cache/claude-essentials/` and the project directory
+4. Search for plan or decomposition files in `.claude/plans/`, project root, and `~/.cache/`
 5. Count TODOs/FIXMEs across source files in the project
 
 Present as a status summary with last activity date, uncommitted work, active plans, and pending TODOs. Then ask: "What do you want to pick up?"
@@ -99,7 +99,7 @@ Local CI checks before pushing. Detect commands in this order:
    - `package.json` with scripts: run available `lint`, `check`, and `test` scripts
    - `Makefile` with `lint`/`test` targets: use those
 
-If multiple apply, run all. Report pass/fail per check. If anything fails, state what failed and stop.
+If multiple apply, run all. Report pass/fail per check. If anything fails, state what failed and stop. If all checks pass, confirm: "Preflight passed. Safe to push."
 
 ### defer
 
@@ -107,5 +107,5 @@ When the user selectively acts on review findings (e.g., "do 2 and 8 only"):
 
 1. Identify the skipped items by number and description.
 2. For each skipped item, add a `// TODO(deferred): [description] - [date]` comment at the relevant code location.
-3. If the item is cross-cutting (not tied to one location), create a GitHub issue instead.
-4. Confirm what was deferred and where it was tracked.
+3. If the item is cross-cutting (not tied to one location): create a GitHub issue if `gh` is available, otherwise add the item to a `TODO.md` file in the project root.
+4. Confirm what was deferred and where each item was tracked.

@@ -12,7 +12,7 @@ Systematic code review using specialized agents in parallel, with skeptical veri
 ### Phase 1: Identify Changes
 
 1. If a file/path is provided, review that scope
-2. Otherwise, use `git diff --name-only HEAD~1` for recent changes
+2. Otherwise, use `git diff --name-only` (staged and unstaged) for uncommitted changes
 3. Filter to language-appropriate file extensions (include test files only if explicitly reviewing tests)
 
 ### Edge Cases
@@ -22,7 +22,7 @@ Systematic code review using specialized agents in parallel, with skeptical veri
 | No files match filter | Report "No files found in scope" and exit |
 | Invalid path provided | Report "Path not found: [path]" and exit |
 | Not a git repo (no arguments) | Report "No git repository found. Provide a file path." |
-| git diff returns empty | Report "No changes in HEAD~1. Provide a file path." |
+| git diff returns empty | Report "No uncommitted changes found. Provide a file path." |
 
 ### Large Scope Handling
 

@@ -8,6 +8,8 @@ allowed-tools: Read, Grep, Glob, Bash, Agent
 
 # Review: $ARGUMENTS
 
+This skill identifies issues. It does NOT fix, refactor, or rewrite code. Present findings and let the user decide what to act on.
+
 ## Resolve Scope
 
 1. If `$ARGUMENTS` is a unit file path (e.g., `~/.cache/claude-essentials/2026-03-26-auth/unit-01.md`), read that file for scope boundaries and review all uncommitted changes matching the unit's **Scope > IN** files.
@@ -78,9 +80,30 @@ When scope > 10 files, offer language-specific filters:
 
 Follow the shared review workflow defined in `${CLAUDE_SKILL_DIR}/reference.md`, substituting the detected language parameters.
 
+### Agent Delegation
+
+Brief each agent like a smart colleague who just walked in -- they have no prior context.
+
+IMPORTANT: Every agent prompt MUST include:
+
+- The full list of files in scope (paths, not just names)
+- The diff content or a summary of what changed
+- The detected language and file extension filters
+- If unit-scoped: the unit's Scope IN/OUT and Acceptance Criteria sections
+
+Do NOT delegate with vague references like "review the recent changes." Always include specific file paths and what to look for.
+
+## When Things Go Wrong
+
+- **Agent returns empty results**: This is valid -- it means no issues in that agent's domain. Include it in the report as "No issues found."
+- **Agent fails or times out**: Report the failure transparently. Do NOT silently skip the agent. Re-run it once. If it fails again, note the gap in the final report.
+- **Agents contradict each other**: Apply the conflict resolution rules in `${CLAUDE_SKILL_DIR}/reference.md`. If no rule covers the case, present both findings and let the user decide.
+
+Do NOT retry a failed agent with the identical prompt. Adjust the scope or context before retrying.
+
 ## Transparency
 
-After all agents complete and the skeptic-reviewer runs:
+IMPORTANT: After all agents complete and the skeptic-reviewer runs:
 
 1. Show findings from **each agent** individually
 2. Show what the **skeptic-reviewer rejected** and why
@@ -88,7 +111,7 @@ After all agents complete and the skeptic-reviewer runs:
 
 ## Human Gate
 
-Agent review is not final. After presenting findings, ask the user to review and approve. The review is only complete when the user explicitly approves.
+CRITICAL: Agent review is not final. After presenting findings, ask the user to review and approve. The review is only complete when the user explicitly approves. Do NOT declare the review complete without user confirmation.
 
 ## Output
 
@@ -105,3 +128,10 @@ Review complete. N findings (P1: X, P2: Y, P3: Z).
 ```
 
 Include the full unit file path if one was used for scoping.
+
+## Anti-Patterns
+
+- Do NOT fix or refactor code during review. Report findings only.
+- Do NOT flag issues without `file:line` references and evidence.
+- Do NOT skip the skeptic-reviewer phase to save time.
+- Do NOT present agent findings without attribution (source agent name).
