@@ -3,7 +3,7 @@ name: svelte-idiom-reviewer
 description: Reviews Svelte 5/SvelteKit code for idiomatic patterns, citing official docs and best practices. Flags anti-patterns with severity levels.
 tools: [Read, Grep, Glob, WebSearch, WebFetch]
 model: opus
-color: orange
+color: pink
 effort: high
 ---
 

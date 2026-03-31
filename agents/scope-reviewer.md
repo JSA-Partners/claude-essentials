@@ -3,7 +3,8 @@ name: scope-reviewer
 description: Detects scope creep by tracing implementations to user stories and requirements. Flags work without documented justification.
 tools: [Read, Grep, Glob]
 model: opus
-color: red
+color: white
+effort: high
 ---
 
 # Scope Reviewer

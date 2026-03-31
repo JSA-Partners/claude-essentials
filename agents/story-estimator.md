@@ -4,6 +4,7 @@ description: Estimates story points (Fibonacci scale) by analyzing codebase comp
 tools: [Read, Grep, Glob]
 model: opus
 color: purple
+effort: high
 ---
 
 # Story Estimator
