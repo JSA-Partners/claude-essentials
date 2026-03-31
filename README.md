@@ -37,7 +37,8 @@ The core workflow chains skills together. You review the output at every step an
 
 ```mermaid
 flowchart LR
-    A("/essentials:story") --> B("/essentials:decompose")
+    Z("/essentials:discuss") -.optional.-> A("/essentials:story")
+    A --> B("/essentials:decompose")
 
     subgraph unit ["for each unit"]
         direction LR
@@ -66,6 +67,7 @@ Every command accepts a full unit file path. You can also pass a partial name li
 
 | Skill | Purpose |
 | ----- | ------- |
+| `/essentials:discuss` | Explore a problem through discussion and research, then produce a prompt for `/essentials:story`. |
 | `/essentials:story` | Create user stories through agent collaboration. |
 | `/essentials:commit` | Generate commit messages matching project patterns. Defaults to conventional commits. |
 | `/essentials:decompose` | Decompose a plan or user story into single-commit implementation units. |
