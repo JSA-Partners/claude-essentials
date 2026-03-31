@@ -27,10 +27,10 @@ Husky hooks run automatically on commit (markdownlint + commitlint).
 - Severity levels: P1, P2, P3 (all agents use this taxonomy)
 - Clean output: "No issues found." (all agents use this label)
 - File naming: kebab-case for all files
-- Skill references: use relative paths (`skills/foo/SKILL.md`), not absolute paths
+- Skill file references: use `${CLAUDE_SKILL_DIR}/file.md` for portable paths (resolves correctly in both plugin and project contexts)
 - Agent tools: Read, Grep, Glob, Bash, WebSearch, WebFetch (only assign what the agent needs)
 - Agent models: opus or haiku
-- Size limits: < 300 lines for agents and skills
+- Size limits: target < 1500 words, max 2500 words (~5K tokens, the compaction re-injection cap)
 - No em dashes or en dashes in prose
 
 ## Documentation

@@ -20,7 +20,7 @@ This ensures we collaborate on improvements rather than making premature changes
 
 Load on-demand for comprehensive expertise:
 
-- `skills/sharpen/reference.md` - Quality checklists, scoring, patterns
+- `skills/sharpen/reference.md` - Verified internals, prompt engineering patterns, quality checklists
 - `skills/sharpen/patterns.md` - Reusable templates for skills and agents
 
 ---
@@ -50,7 +50,7 @@ Do not proceed without plan mode active.
 
 ### Phase 2: Research Current Best Practices
 
-Search for current industry best practices:
+Load `skills/sharpen/reference.md` first -- it contains verified knowledge about how Claude Code processes skills and agents internally, plus proven prompt engineering patterns. Then search for anything new:
 
 ```txt
 Use WebSearch tool with queries like:
@@ -152,7 +152,7 @@ Apply these in all recommendations:
 
 | Pattern               | Problem                       | Fix                       |
 | --------------------- | ----------------------------- | ------------------------- |
-| >300 line skill       | Scope creep, hard to maintain | Split or extract to reference file |
+| >2500 word skill      | Scope creep, exceeds compaction budget | Split or extract to reference file |
 | No verification step  | No way to catch errors        | Add quality gate phase    |
 | No `AskUserQuestion`  | Assumes instead of asks       | Add clarification points  |
 | Hardcoded build cmds  | Goes stale, not portable      | Reference CLAUDE.md       |
