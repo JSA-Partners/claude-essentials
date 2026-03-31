@@ -14,7 +14,7 @@ A [Claude Code](https://code.claude.com/) plugin with opinionated agents and ski
 
 ## Background
 
-This plugin codifies how [JSA+Partners](https://jsapartners.co/) ships software with Claude Code. Every skill is human-gated. The workflow enforces a disciplined path from idea to pull request: brainstorm a user story, decompose it into single-commit units, then implement, review, document, and commit each unit before shipping the PR.
+This plugin codifies how [JSA+Partners](https://jsapartners.co/) ships software with Claude Code. Every skill is human-gated. The workflow enforces a disciplined path from idea to pull request: draft a user story, decompose it into single-commit units, then implement, review, document, and commit each unit before shipping the PR.
 
 The review pipeline runs five specialized agents in parallel (complexity, architecture, technical, scope, and language idioms), then passes all findings through an adversarial skeptic agent to eliminate false positives.
 
@@ -31,7 +31,7 @@ The core workflow chains skills together. You review the output at every step an
 
 ```mermaid
 flowchart LR
-    A("/brainstorm") --> B("/decompose")
+    A("/story") --> B("/decompose")
 
     subgraph unit ["for each unit"]
         direction LR
@@ -60,7 +60,7 @@ Every command accepts a full unit file path. You can also pass a partial name li
 
 | Skill | Purpose |
 | ----- | ------- |
-| `/brainstorm` | Brainstorm and create user stories through agent collaboration. |
+| `/story` | Create user stories through agent collaboration. |
 | `/commit` | Generate conventional commit messages matching project patterns. |
 | `/decompose` | Decompose a plan or user story into single-commit implementation units. |
 | `/document` | Capture learnings from implementation into docs/claude, memories, or CLAUDE.md. |

@@ -1,10 +1,10 @@
 ---
-description: Brainstorm and create user stories through agent collaboration
+description: Create user stories through agent collaboration
 argument-hint: [feature description]
 allowed-tools: Read, Write, Glob, Agent
 ---
 
-# Brainstorm
+# Story
 
 Create user stories through agent collaboration.
 
