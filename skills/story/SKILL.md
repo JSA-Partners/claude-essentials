@@ -51,14 +51,15 @@ Run `story-estimator` agent with drafted story.
 
 ### Phase 4: Generate File
 
-1. Find next story number: highest in `docs/user-stories/` + 1
-2. Create file using template structure
-3. Populate all sections from agent outputs
-4. Confirm creation with file path
+1. **Locate story directory**: Check `docs/user-stories/` first. If it does not exist, search for alternative locations (e.g., `stories/`, `user-stories/`, or any directory containing files that match the story template structure). If no story directory is found, ask the user where stories should live and create the directory.
+2. Find next story number: highest in the story directory + 1
+3. Create file using template structure
+4. Populate all sections from agent outputs
+5. Confirm creation with file path
 
 ## Output Template
 
-Follow `docs/user-stories/template.md`:
+If a `template.md` exists in the story directory, follow it. Otherwise use this default:
 
 ```markdown
 # [NUMBER]: [STORY_TITLE]

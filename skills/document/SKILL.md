@@ -1,5 +1,5 @@
 ---
-description: Capture learnings from implementation into docs/claude, memories, or CLAUDE.md
+description: Capture learnings from implementation into project docs, memories, or CLAUDE.md
 argument-hint: <path-to-unit.md | topic>
 allowed-tools: Read, Write, Bash, Grep, Glob
 ---
@@ -29,7 +29,7 @@ Look at the current branch's changes, review findings, and decisions made during
 
 Tiered by significance:
 
-1. **`docs/claude/`** (default) -- Create or update a topic file. One file per topic area, not per session. If `docs/claude/` does not exist, create it.
+1. **`docs/claude/`** (default) -- Create or update a topic file. One file per topic area, not per session. If `docs/claude/` does not exist, search for an alternative documentation directory already in use (e.g., `docs/`, `.claude/docs/`, or any directory with existing reference markdown files). If a reasonable alternative is found, confirm with the user before writing there. If nothing exists, create `docs/claude/`.
 2. **Memories** -- If the learning applies across projects (not just this repo), save to the memory system.
 3. **`CLAUDE.md`** -- Only for mission-critical, project-wide rules that must load every session. This is rare.
 

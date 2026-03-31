@@ -1,10 +1,10 @@
 ---
-description: Generate a conventional commit message based on the changes in the codebase
+description: Generate a commit message matching the project's conventions, defaulting to conventional commits
 disable-model-invocation: true
 allowed-tools: Bash, Read
 ---
 
-# Conventional Commit Generator
+# Commit Message Generator
 
 Generate commit messages that match the project's established patterns.
 
@@ -34,29 +34,32 @@ Run in parallel:
 
 **Extract from history:**
 
+- Commit message convention in use (conventional commits, Angular, freeform, etc.)
 - Scopes used (e.g., api, auth, db, ui)
 - Description style (length, wording patterns)
 - Whether bodies are commonly used
 - Any custom types beyond standard ones
 
+**Determine convention:**
+
+- If the majority of recent commits follow a recognizable convention, match it
+- If no clear convention exists or the history is sparse, default to conventional commits (see Quick Reference below)
+
 ### Step 3: Generate Message
 
-**Auto-detect scope** from staged file paths:
+**Auto-detect scope** from staged file paths (when using conventional commits or scoped conventions):
 
-- `internal/auth/*` → `auth`
-- `internal/api/*` → `api`
-- `cmd/*` → `cmd`
-- `docs/*` → `docs`
-- Multiple areas → most specific common ancestor, or omit
+- Map directory paths to logical scopes (e.g., `internal/auth/*` to `auth`, `src/api/*` to `api`)
+- Multiple areas: most specific common ancestor, or omit
 
-**Generate message matching project patterns:**
+**Generate message matching the detected convention:**
 
-- Use type appropriate for change (feat/fix/refactor/docs/test/chore/etc.)
-- Match the style observed in git history
+- Use the convention identified in Step 2
+- Match the style, casing, and structure observed in git history
 - Skip body unless change is complex or non-obvious
 - Include footer only for breaking changes or issue refs
 
-**Validate the message:**
+**Validate the message** against the detected convention. For conventional commits, validate:
 
 - Type: `feat|fix|docs|style|refactor|perf|test|build|ci|chore`
 - Description: imperative, lowercase, no period, <50 chars
@@ -82,7 +85,7 @@ EOF
 )"
 ```
 
-## Quick Reference
+## Quick Reference (Conventional Commits Default)
 
 ```txt
 <type>[scope][!]: <description>
@@ -99,3 +102,5 @@ EOF
 - Description: imperative, lowercase, no period
 - Body: only when "why" isn't obvious from diff
 - Footer: `BREAKING CHANGE:` or issue refs (`Fixes #123`)
+
+This format is the default. If the project's git history shows a different convention, follow that instead.

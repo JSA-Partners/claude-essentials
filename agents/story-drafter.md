@@ -59,6 +59,8 @@ When input contains "and" or multiple features:
 
 ## Output Format
 
+Check the story directory for a `template.md`. If one exists, follow its structure. Otherwise use this default:
+
 ```markdown
 # [Verb] [Entity] [Context]
 

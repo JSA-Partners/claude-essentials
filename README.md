@@ -20,6 +20,12 @@ The review pipeline runs five specialized agents in parallel (complexity, archit
 
 ## Install
 
+### Dependencies
+
+- Git
+- [GitHub CLI](https://cli.github.com/) (`gh`) for `/pr`
+- A `CLAUDE.md` in your project root (run `/init` to generate one)
+
 ```bash
 /plugin marketplace add JSA-Partners/claude-essentials
 /plugin install essentials@jsapartners
@@ -61,14 +67,14 @@ Every command accepts a full unit file path. You can also pass a partial name li
 | Skill | Purpose |
 | ----- | ------- |
 | `/story` | Create user stories through agent collaboration. |
-| `/commit` | Generate conventional commit messages matching project patterns. |
+| `/commit` | Generate commit messages matching project patterns. Defaults to conventional commits. |
 | `/decompose` | Decompose a plan or user story into single-commit implementation units. |
-| `/document` | Capture learnings from implementation into docs/claude, memories, or CLAUDE.md. |
-| `/implement` | Implement one decomposed unit with idiomatic patterns and quality gates. Auto-detects Go or Svelte. |
+| `/document` | Capture learnings from implementation into project docs, memories, or CLAUDE.md. |
+| `/implement` | Implement one decomposed unit with idiomatic patterns and quality gates. |
 | `/init` | Generate a CLAUDE.md for the current project based on codebase analysis. |
 | `/meta` | Update the /sharpen skill with new resources. |
 | `/playbook` | Inject behavioral plays and execution protocols. |
-| `/pr` | Create a GitHub PR with conventional commit title. |
+| `/pr` | Create a GitHub PR matching project conventions. Requires `gh` CLI. |
 | `/review` | Review code with parallel specialized agents, adversarial verification, and human approval. |
 | `/sharpen` | Systematically improve skills and agents using proven patterns. |
 

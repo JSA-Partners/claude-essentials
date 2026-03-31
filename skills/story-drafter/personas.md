@@ -4,29 +4,33 @@ Standard personas for user stories. Select based on who performs the action.
 
 ## Persona Definitions
 
-| Persona                   | Use When                                         | Example Actions                                    |
-| ------------------------- | ------------------------------------------------ | -------------------------------------------------- |
-| **System Administrator**  | System config, data management, admin operations | Delete users, configure settings, manage roles     |
-| **Content Manager**       | Content CRUD, curation, publishing workflows     | Create articles, publish posts, moderate comments  |
-| **Developer**             | API, SDK, integration, technical tooling         | Use API endpoints, integrate SDK, access docs      |
-| **External API Consumer** | Third-party integration, webhooks                | Receive webhooks, query public API, sync data      |
-| **System**                | Automated processes, background jobs             | Schedule tasks, process queues, send notifications |
-| **User**                  | End-user facing features, UI interactions        | Log in, view dashboard, submit forms               |
+| Persona              | Use When                                                  | Example Actions                                       |
+| -------------------- | --------------------------------------------------------- | ----------------------------------------------------- |
+| **Administrator**    | System config, user management, permissions, ops tasks    | Configure settings, manage roles, view audit logs     |
+| **End User**         | Core product interactions, day-to-day usage               | Log in, view dashboard, submit forms, update profile  |
+| **Developer**        | API, SDK, CLI, integration, developer tooling             | Use API endpoints, integrate SDK, read docs           |
+| **API Consumer**     | Third-party or service-to-service integration             | Receive webhooks, query public API, sync data         |
+| **System**           | Automated processes, scheduled jobs, no human trigger     | Process queues, send notifications, run migrations    |
+| **Operator**         | Monitoring, incident response, infrastructure management  | View metrics, respond to alerts, scale services       |
+| **Content Author**   | Content creation, editing, publishing workflows           | Create articles, publish posts, moderate comments     |
+| **Reviewer/Approver**| Review workflows, approval gates, quality checks          | Approve submissions, review changes, sign off         |
 
 ## Selection Logic
 
 ```txt
 WHO performs the action?
     |
-    +-> Internal staff managing system? --> System Administrator
+    +-> Internal staff managing system/infra? --> Administrator or Operator
     |
-    +-> Internal staff managing content? --> Content Manager
+    +-> Internal staff creating/managing content? --> Content Author
     |
-    +-> Developer using our API? --> Developer / External API Consumer
+    +-> Someone approving or reviewing work? --> Reviewer/Approver
     |
-    +-> Automated process, no human? --> System
+    +-> Developer using our API/SDK/CLI? --> Developer or API Consumer
     |
-    +-> End user of the product? --> User
+    +-> Automated process, no human trigger? --> System
+    |
+    +-> Person using the product? --> End User
 ```
 
 ## Custom Personas
@@ -35,7 +39,9 @@ If no standard persona fits, create a specific one:
 
 - Use role-based naming: "Billing Manager", "Support Agent", "Team Lead"
 - Avoid generic terms: "stakeholder", "customer" (too vague)
-- Include context: "Enterprise User" vs "Free Tier User" when relevant
+- Include context when relevant: "Enterprise User" vs "Free Tier User", "Mobile User" vs "Desktop User"
+
+Not every project uses every persona. Pick the ones that map to real roles in the system being built.
 
 ## Persona in Context
 

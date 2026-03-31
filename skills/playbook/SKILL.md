@@ -82,19 +82,22 @@ Re-entry after a gap. Run in parallel and present a status summary:
 1. `git log --oneline -15` for recent commits
 2. `git status` for uncommitted work
 3. `git stash list` for stashed work
-4. `gh pr list --author @me 2>/dev/null` for open PRs
-5. Find plans: `ls docs/plans/*.md 2>/dev/null`
-6. Count TODOs: `grep -rl "TODO\|FIXME" --include="*.go" --include="*.py" --include="*.svelte" --include="*.ts" . 2>/dev/null`
+4. Search for plan or decomposition files in `~/.cache/claude-essentials/` and the project directory
+5. Count TODOs/FIXMEs across source files in the project
 
-Present as a status summary with last activity date, uncommitted work, open PRs, active plans, and pending TODOs. Then ask: "What do you want to pick up?"
+Present as a status summary with last activity date, uncommitted work, active plans, and pending TODOs. Then ask: "What do you want to pick up?"
 
 ### preflight
 
-Local CI checks before pushing. Auto-detect project type and run matching checks:
+Local CI checks before pushing. Detect commands in this order:
 
-- `go.mod` exists: `go vet ./... && go test ./... -count=1`
-- `pyproject.toml` exists: `uv run ruff check . && uv run mypy . && uv run pytest`
-- `svelte.config.js` exists: `pnpm run check && pnpm run lint`
+1. **CLAUDE.md** -- Read the `Development Workflow` section for lint, test, and check commands. If found, use those.
+2. **Codebase detection** -- If CLAUDE.md has no commands, detect from project files:
+   - `go.mod` exists: `go vet ./... && go test ./... -count=1`
+   - `pyproject.toml` exists: `uv run ruff check . && uv run mypy . && uv run pytest`
+   - `svelte.config.js` exists: `pnpm run check && pnpm run lint`
+   - `package.json` with scripts: run available `lint`, `check`, and `test` scripts
+   - `Makefile` with `lint`/`test` targets: use those
 
 If multiple apply, run all. Report pass/fail per check. If anything fails, state what failed and stop.
 

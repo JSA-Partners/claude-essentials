@@ -1,15 +1,15 @@
 ---
 name: document
-description: Guide for writing docs/claude reference documents -- file types, structure, and quality criteria
+description: Guide for writing project reference documents -- file types, structure, and quality criteria
 ---
 
 # Documentation Skill
 
-Write `docs/claude/` files that serve as reference material for Claude. These are topic-based reference documents, not changelogs or journals.
+Write reference files that serve as context material for Claude. The default location is `docs/claude/`, but the calling skill may resolve to an alternative directory. These are topic-based reference documents, not changelogs or journals.
 
 ## Core Principle
 
-Every docs/claude file should read like documentation a senior engineer wrote for a new team member who has access to the code but needs context the code does not provide.
+Every reference file should read like documentation a senior engineer wrote for a new team member who has access to the code but needs context the code does not provide.
 
 ## File Types
 
@@ -45,7 +45,7 @@ Every file follows the same shape:
 - **One file per topic area** -- not per session, not per date
 - **No date headers** -- content is organized by concept, not chronology
 - **Integrate, do not append** -- new learnings merge into the relevant section
-- **Cross-reference** -- link between docs/claude files with relative paths (`[patterns.md](./patterns.md)`)
+- **Cross-reference** -- link between reference files with relative paths (`[patterns.md](./patterns.md)`)
 
 ## Content Patterns
 
@@ -95,7 +95,7 @@ Each decision follows a consistent format:
 - Note what enforces the rule (linter name, config)
 - Explain why the rule exists
 
-## What Belongs in docs/claude
+## What Belongs in Reference Docs
 
 - Architecture and data flow that is not obvious from file structure alone
 - Rationale behind non-obvious decisions (especially rejected alternatives)
@@ -119,6 +119,6 @@ Each decision follows a consistent format:
 - [ ] No date-stamped sections
 - [ ] Code examples are complete and copy-pasteable
 - [ ] Tables used for mappings and comparisons
-- [ ] Cross-references to related docs/claude files
-- [ ] No duplication with other docs/claude files
+- [ ] Cross-references to related reference files
+- [ ] No duplication with other reference files
 - [ ] Content would genuinely help Claude work in this codebase

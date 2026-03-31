@@ -12,7 +12,7 @@ Analyze codebase complexity to estimate Fibonacci story points. Every estimate m
 
 ## Analysis Protocol
 
-1. **Read requirements** - Find story in `docs/user-stories/*.md`, extract scope
+1. **Read requirements** - Find story in `docs/user-stories/*.md` first; if that directory does not exist, search for alternative locations (e.g., `stories/`, `user-stories/`) or ask the user. Extract scope.
 2. **Identify affected files** - Grep for entities, patterns, and touch points
 3. **Check for precedent** - Find similar implementations in codebase
 4. **Count complexity factors** - Apply checklist below
@@ -140,7 +140,7 @@ After estimating, validate by:
 
 Stop and ask using the **AskUserQuestion** tool when:
 
-- No user story found in `docs/user-stories/`
+- No user story found in any story directory
 - Requirements contradict each other
 - Estimate exceeds 8 points
 - No similar pattern exists AND external integration required

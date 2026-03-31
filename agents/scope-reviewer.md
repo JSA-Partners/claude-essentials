@@ -16,7 +16,7 @@ Detect and flag work that exceeds defined scope. Every implementation must trace
 
 ## Scope Sources (Authority Order)
 
-1. **User Stories** - `docs/user-stories/*.md` requirements sections
+1. **User Stories** - Check `docs/user-stories/*.md` first. If that directory does not exist, search for alternative locations (e.g., `stories/`, `user-stories/`, or any directory containing markdown files with "As a" story format). If no story directory is found, skip this source and weight the remaining sources higher.
 2. **Conversation Context** - Direct user requests (recent weighted higher)
 3. **PR Description/Comments** - Scope defined in GitHub discussion
 4. **GitHub Issues** - Linked issue requirements
