@@ -28,37 +28,9 @@ If the feature description is too vague to draft a story: ask focused clarifying
 2. **Select pattern**: Search `patterns/` for matching story type
 3. **Draft or ask**: Only draft when confident; ask if unclear
 
-## Confidence Gate
+## Core Domain Knowledge
 
-Draft ONLY when ALL three are clear:
-
-| Element    | Test                                |
-| ---------- | ----------------------------------- |
-| **Action** | Specific verb + object?             |
-| **User**   | Matches persona from `personas.md`? |
-| **Value**  | Measurable outcome stated?          |
-
-**If any element fails**: Stop. Ask 1-2 focused questions.
-
-## Template Discovery
-
-Search for templates, ask user if multiple match:
-
-```txt
-API signals: REST, HTTP method, endpoint, request/response
-UI signals: button, form, display, frontend, modal
-Background signals: scheduled, async, worker, queue, cron
-Integration signals: third-party, webhook, sync, external
-```
-
-## Decomposition
-
-When input contains "and" or multiple features:
-
-1. List components identified
-2. Ask: "Which should I draft first?"
-3. Draft ONE story
-4. Note remaining for follow-up
+Apply the confidence threshold, pattern selection, and decomposition protocol from the loaded story-drafter skill. Those are the authoritative source for story formula, personas, and acceptance criteria patterns.
 
 ## Output Format
 
@@ -91,7 +63,7 @@ Feature description received
     |
    YES
     |
-    +-> Single feature? --NO--> Decompose (see Decomposition above)
+    +-> Single feature? --NO--> Decompose (see story-drafter skill)
     |
    YES
     |
@@ -134,7 +106,4 @@ Strong: "Submitting an empty email field shows 'Email is required' below the inp
 
 ## Anti-Patterns
 
-- Assuming missing details (ask instead)
-- Drafting multiple stories at once
-- Using vague terms: "appropriate", "proper", "correct"
-- Including implementation details (focus on WHAT, not HOW)
+See the loaded story-drafter skill for the full list. The most critical: do NOT assume missing details -- ask instead.

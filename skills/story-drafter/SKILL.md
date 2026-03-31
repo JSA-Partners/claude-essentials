@@ -26,7 +26,7 @@ Only draft when ALL three are clear:
 | **User**   | Identifiable persona from `personas.md` |
 | **Value**  | Outcome-focused, measurable benefit     |
 
-If any element is unclear: **Stop and ask.**
+If any element is unclear: **Stop and ask.** Stories drafted with missing elements produce untestable acceptance criteria and waste estimator cycles.
 
 ## Pattern Selection
 
@@ -54,9 +54,9 @@ When input contains multiple features ("and", "also", compound requests):
 
 ## Quick Reference
 
-- **Personas**: See `personas.md` for approved list
-- **Examples**: See `examples.md` for format samples
-- **Patterns**: See `patterns/` folder for acceptance criteria guides
+- **Personas**: See `${CLAUDE_SKILL_DIR}/personas.md` for approved list
+- **Examples**: See `${CLAUDE_SKILL_DIR}/examples.md` for format samples
+- **Patterns**: See `${CLAUDE_SKILL_DIR}/patterns/` folder for acceptance criteria guides
 
 ## Anti-Patterns
 
