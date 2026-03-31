@@ -15,9 +15,9 @@ If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask: "Provide a plan, story, 
 
 ## CRITICAL RULES
 
-1. **All output files go in `~/.cache/claude-essentials/`.** Not in the project directory. Not in `docs/`. Never `/tmp/`.
-2. **You MUST write unit files to disk using the Write tool.** The deliverable is files, not chat prose. If you finish this command without calling Write to create unit files, you have failed.
-3. **Do not present unit details in chat.** Write them to files instead. The only chat output is the summary table and the next-step block.
+1. **All output files go in `~/.cache/claude-essentials/`.** Not in the project directory, not in `docs/`, never `/tmp/`. Cache output keeps the project tree clean and avoids accidental commits of planning artifacts.
+2. **You MUST write unit files to disk using the Write tool.** The deliverable is files, not chat prose. Files survive `/clear` and feed directly into `/essentials:implement`. If you finish without calling Write, you have failed.
+3. **Do not present unit details in chat.** Write them to files instead. The only chat output is the summary table and the next-step block. Chat prose wastes context window and is lost after `/clear`.
 
 ---
 
@@ -26,16 +26,20 @@ If `$ARGUMENTS` is empty, use `AskUserQuestion` to ask: "Provide a plan, story, 
 **DO NOT DECOMPOSE YET** - first understand the input and codebase.
 
 1. **Read the input** - file path or inline content from `$ARGUMENTS`
-2. **Explore the codebase** using an Explore agent:
+2. **Read CLAUDE.md** for project conventions, tech stack, and build commands
+3. **Explore the codebase** using an Explore agent. Brief it like a smart colleague who just walked in -- full context, not shorthand:
 
    ```txt
    Task(subagent_type='Explore', thoroughness='very thorough'):
-   Explore all code areas affected by [input topic].
-   Map: current patterns, affected files, test structure.
+   I'm decomposing [input topic] into implementation units.
+   Find: (1) all files and packages affected, (2) existing patterns
+   for similar work, (3) test structure and conventions, (4) any
+   active work-in-progress that overlaps.
+   Return file paths and a summary of each area.
    ```
 
-3. **Extract every ambiguity** - anywhere the input says "what" but not "how"
-4. **Ask clarifying questions** via `AskUserQuestion` (max 4 per round, iterate as needed)
+4. **Extract every ambiguity** - anywhere the input says "what" but not "how"
+5. **Ask clarifying questions** via `AskUserQuestion` (max 4 per round, iterate as needed)
 
 **Checkpoint -- stop and ask user when:**
 
@@ -109,6 +113,17 @@ Use the Write tool to create `unit-01.md`, `unit-02.md`, etc. in the same direct
 ### Step 5: Verify
 
 Use `Glob` on the output directory for `unit-*.md` to confirm all files exist. If any are missing, write them now.
+
+---
+
+## When Things Go Wrong
+
+- **Circular dependencies**: Re-examine shared state. Extract the shared piece into its own unit that both depend on.
+- **Unit too large (15+ files)**: Split by package first, then by layer (production vs test vs wiring).
+- **Conflicting patterns in codebase**: Flag the conflict in the unit's Steps section and note which pattern to follow and why.
+- **Scope unclear after questions**: Write what you can decompose and mark unclear areas as "TBD -- needs [specific decision]" in the unit file.
+
+Do NOT guess when stuck. Ask the user via `AskUserQuestion` with specific options.
 
 ---
 
