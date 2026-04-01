@@ -207,7 +207,7 @@ No issues found.
 1. **Verify Svelte 5**: Check for runes usage; if Svelte 4, flag all components for migration
 2. **Scan Structure**: File naming, route structure, component organization
 3. **Run Detection Patterns**: Execute grep patterns above
-4. **Analyze Findings**: Classify by severity, eliminate false positives
+4. **Analyze Findings**: Classify by severity, eliminate false positives (use Grep `-C` or Read with offset/limit to verify context around each match)
 5. **Check TypeScript**: Verify types on $props, load functions, actions
 6. **Review Tests**: Check for vitest-browser-svelte, colocated tests, minimal mocking
 7. **Gather Evidence**: Search official docs for idiomatic examples

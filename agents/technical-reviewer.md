@@ -152,7 +152,7 @@ If a risk is uncertain: verify by reading the actual error paths and checking ho
 
 1. **Identify scope** - What files/features are being added or modified?
 2. **Run detection patterns** - Execute relevant grep patterns from focus areas
-3. **Verify context** - Read surrounding code before flagging
+3. **Verify context** - Read surrounding code before flagging (use Grep `-C` or Read with offset/limit to target ~20 lines around each match)
 4. **Check existing patterns** - Does codebase handle this elsewhere?
 5. **Apply thresholds** - Only flag if meets P1/P2/P3 criteria
 6. **Gather evidence** - Include file:line references for every finding

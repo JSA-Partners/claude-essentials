@@ -55,7 +55,7 @@ If research yields insufficient results (no official style guide, sparse documen
 ### Detection
 
 1. **Run ad-hoc grep patterns** built from Phase 1
-2. **Read flagged code** to verify each match is a real violation
+2. **Read flagged code** to verify each match is a real violation (use Grep `-C` or Read with offset/limit to target ~20 lines around each match)
 3. **Check project context** -- does CLAUDE.md document intentional exceptions?
 
 ### Classification

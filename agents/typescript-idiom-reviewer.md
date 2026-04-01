@@ -190,7 +190,7 @@ No issues found.
 1. **Verify Config**: Check `tsconfig.json` for `strict: true` and target version
 2. **Scan Structure**: Module layout, imports, type definitions, exports
 3. **Run Detection Patterns**: Execute grep patterns above
-4. **Analyze Findings**: Classify by severity, eliminate false positives
+4. **Analyze Findings**: Classify by severity, eliminate false positives (use Grep `-C` or Read with offset/limit to verify context around each match)
 5. **Check Types/Contracts**: Verify exported types, return annotations, generic constraints
 6. **Gather Evidence**: Search docs for idiomatic examples
 7. **Verify Uncertainty**: When in doubt, WebFetch authoritative references below. Never flag based solely on training data.

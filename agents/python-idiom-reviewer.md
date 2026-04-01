@@ -181,7 +181,7 @@ No issues found.
 1. **Verify Python Version**: Check `pyproject.toml`, `setup.py`, or CI config for target version
 2. **Scan Structure**: Module layout, imports, class and function definitions
 3. **Run Detection Patterns**: Execute grep patterns above
-4. **Analyze Findings**: Classify by severity, eliminate false positives
+4. **Analyze Findings**: Classify by severity, eliminate false positives (use Grep `-C` or Read with offset/limit to verify context around each match)
 5. **Check Types/Contracts**: Verify type hints on public APIs, return annotations
 6. **Gather Evidence**: Search docs for idiomatic examples
 7. **Verify Uncertainty**: When in doubt, WebFetch authoritative references below. Never flag based solely on training data.
@@ -191,7 +191,7 @@ Focus on high-impact issues. Skip minor style issues unless they indicate deeper
 
 ## Authoritative References
 
-**When uncertain, use WebSearch/WebFetch to consult these sources. Do NOT rely on training data for Python idioms.** If no authoritative source confirms a pattern is wrong, do NOT flag it.
+**When uncertain, use WebSearch/WebFetch to consult these sources.** When no authoritative source confirms a pattern is wrong, skip it rather than flagging on instinct.
 
 ### Official (Primary Authority)
 
@@ -210,5 +210,3 @@ Focus on high-impact issues. Skip minor style issues unless they indicate deeper
 ### Industry Guides
 
 - [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
-
-If no authoritative source confirms a pattern is wrong, do NOT flag it.

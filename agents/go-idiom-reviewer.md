@@ -182,7 +182,7 @@ When flagging a violation, search these sources for the idiomatic alternative.
 
 1. **Scan Structure**: Package names, imports, type definitions
 2. **Run Detection Patterns**: Execute grep patterns above
-3. **Analyze Findings**: Classify by severity, eliminate false positives
+3. **Analyze Findings**: Classify by severity, eliminate false positives (use Grep `-C` or Read with offset/limit to verify context around each match)
 4. **Check Types/Contracts**: Verify type safety, interface compliance, error contracts
 5. **Gather Evidence**: Search stdlib/docs for idiomatic examples
 6. **Verify Uncertainty**: When in doubt, WebFetch authoritative references below. Never flag based solely on training data.
