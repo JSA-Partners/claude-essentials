@@ -123,6 +123,12 @@ After writing:
 1. Read the file back to confirm it was written correctly
 2. Present a summary: what was detected, what needs manual filling
 3. Suggest the user review and customize the placeholder sections
+4. Explain where this file fits in the CLAUDE.md hierarchy:
+   - `~/.claude/CLAUDE.md` -- global preferences (coding style, personal rules)
+   - `./CLAUDE.md` -- project-level (architecture, conventions, build commands)
+   - `.claude/rules/*.md` -- modular rules (one concern per file)
+   - `CLAUDE.local.md` -- private notes (gitignored, not shared with team)
+5. Note that CLAUDE.md is re-read every turn, not just at session start. Keep it focused on high-value, non-obvious information. Every line competes for the 40K character budget.
 
 ## Anti-Patterns
 

@@ -21,6 +21,7 @@ Understanding how the system handles skills prevents common mistakes:
 - **Supporting files are not auto-loaded**: Only SKILL.md is injected. Reference files require an explicit Read call. Inline critical guidance in SKILL.md; use supporting files for deep dives.
 - **Compaction budget**: Post-compaction re-injection is capped at **5K tokens per skill** (~2500 words), 25K total.
 - **Microcompaction**: Older tool results are stripped between turns. Front-load the most important information.
+- **Tool result truncation**: Large tool results are stored to disk with only an ~8KB preview sent to the model. Skills and agents that read large files should target specific sections (line ranges, grep patterns) rather than reading entire files.
 - **`context: fork`**: Runs skill in an isolated sub-agent. Good for self-contained tasks (reviews, analysis). The parent receives a summary, not the full conversation.
 
 ## How Agents Are Processed
@@ -93,6 +94,14 @@ When delegating to sub-agents: "Brief like a smart colleague who just walked in 
 
 Place stable instructions first, variable context last. This mirrors prompt cache optimization and helps the model distinguish "how to behave" from "what to work with."
 
+### Cache-Aware Agent Design
+
+Fork agents receive a byte-identical copy of the parent context, sharing the API prompt cache. Design for this:
+
+- Use `model: inherit` on fork agents so they hit the same cache as the parent.
+- Prefer read-only tools (Read, Grep, Glob) which run concurrently. Mutating tools (Edit, Write, Bash) run serially and block each other.
+- When a skill spawns multiple agents in parallel, they all share the cache. Five parallel agents cost roughly the same as one sequential agent.
+
 ### Anti-Pattern Enumeration
 
 For each agent, identify the 3-5 most likely failure modes and prohibit them with concrete examples. Models default to training data patterns. Name what you want to override.
@@ -142,6 +151,7 @@ For each agent, identify the 3-5 most likely failure modes and prohibit them wit
 - [ ] Clear mission statement as opening line (identity first)
 - [ ] Defined input/output format
 - [ ] Tool restrictions appropriate to role (not wildcard unless general-purpose)
+- [ ] Fork agents use `model: inherit` (shares prompt cache with parent)
 - [ ] Severity levels defined (P1, P2, P3)
 
 ### Behavior (Score 0-10)
@@ -189,6 +199,7 @@ For each agent, identify the 3-5 most likely failure modes and prohibit them wit
 | Aggressive | Flags hypothetical issues | P2 |
 | No strengths | Missing strengths declaration | P2 |
 | Emphasis flooding | Overuses CRITICAL/IMPORTANT markers | P2 |
+| Fork model override | Fork agent with explicit model instead of `inherit` | P2 |
 | Missing scope anchor | No "out of scope" definition | P3 |
 
 ---
