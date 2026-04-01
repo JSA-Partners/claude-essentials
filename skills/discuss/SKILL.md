@@ -67,7 +67,9 @@ IMPORTANT: Keep each discussion round short. Present what you learned, ask what 
 
 ### Phase 4: Synthesize
 
-When clarity is sufficient, produce a structured feature brief. Output it directly in chat as a fenced markdown block:
+When clarity is sufficient, produce a structured feature brief. Before outputting, verify the brief contains all three elements: action, user, and value. If any element is missing, fill it from discussion context or mark it as "TBD."
+
+Output it directly in chat as a fenced markdown block:
 
 ````markdown
 ```

@@ -27,7 +27,7 @@ Plays are attention anchors. Single words that decompress into behavioral specs 
 | _(empty)_ | Interactive | Display Quick Reference and let user pick a play |
 | `<play>` | Direct | Activate the named play immediately |
 
-If `$ARGUMENTS` is empty, display the Quick Reference table above and prompt the user to pick a play.
+If `$ARGUMENTS` is empty, display the Quick Reference table above and use `AskUserQuestion` to let the user pick a play.
 
 If `$ARGUMENTS` names a play, activate it. Steering plays inject behavior going forward. Execution plays run immediately.
 
@@ -101,6 +101,8 @@ Local CI checks before pushing. Detect commands in this order:
 
 If multiple apply, run all. Report pass/fail per check. If anything fails, state what failed and stop. If all checks pass, confirm: "Preflight passed. Safe to push."
 
+**Verification**: Re-read the output of each check command. Only report "Safe to push" if every check exited 0.
+
 ### defer
 
 When the user selectively acts on review findings (e.g., "do 2 and 8 only"):
@@ -108,4 +110,4 @@ When the user selectively acts on review findings (e.g., "do 2 and 8 only"):
 1. Identify the skipped items by number and description.
 2. For each skipped item, add a `// TODO(deferred): [description] - [date]` comment at the relevant code location.
 3. If the item is cross-cutting (not tied to one location): create a GitHub issue if `gh` is available, otherwise add the item to a `TODO.md` file in the project root.
-4. Confirm what was deferred and where each item was tracked.
+4. **Verify**: Grep for the TODO comments you just added to confirm they were written. Report what was deferred and where each item was tracked.

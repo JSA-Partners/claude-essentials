@@ -75,10 +75,12 @@ IMPORTANT: **Validate the message** against the detected convention before prese
 
 ### Step 4: Confirm & Commit
 
-Present the generated message, then **use AskUserQuestion tool**:
+CRITICAL: **Never run `git commit` without explicit user approval.** Present the generated message, then **use AskUserQuestion tool**:
 
 - **"Commit"** - Execute the commit
 - **"Edit"** - User provides feedback via "Other" option, regenerate message
+
+Do NOT proceed to `git commit` until the user selects "Commit". Skipping confirmation means the user loses the chance to catch mistakes.
 
 **For multiline messages** (with body/footer), use HEREDOC:
 

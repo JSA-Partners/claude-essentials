@@ -103,7 +103,7 @@ allowed-tools: Read, Grep, Glob, Agent
 
 ## Phase 2: Parallel Analysis
 
-Run these agents in parallel:
+Run these agents in parallel. All read-only agents share the parent's prompt cache, so parallel spawning is cheap. Prefer agents with read-only tools (Read, Grep, Glob) for concurrency.
 
 | Agent     | Focus            |
 | --------- | ---------------- |

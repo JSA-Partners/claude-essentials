@@ -10,6 +10,8 @@ allowed-tools: Read, Grep, Glob, Bash, Agent
 
 This skill identifies issues. It does NOT fix, refactor, or rewrite code. Present findings and let the user decide what to act on.
 
+IMPORTANT: Review is never complete without explicit user approval (see Human Gate below).
+
 ## Resolve Scope
 
 1. If `$ARGUMENTS` is a unit file path (e.g., `~/.cache/claude-essentials/2026-03-26-auth/unit-01.md`), read that file for scope boundaries and review all uncommitted changes matching the unit's **Scope > IN** files.

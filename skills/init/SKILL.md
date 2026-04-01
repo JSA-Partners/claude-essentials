@@ -132,8 +132,8 @@ After writing:
 
 ## Anti-Patterns
 
-- Do NOT include information that is obvious from the code itself (e.g., "this is a TypeScript project" when `tsconfig.json` is present). Focus on non-obvious conventions, gotchas, and workflow commands.
-- Do NOT generate a wall of text. A 40-line CLAUDE.md that loads every session is better than a 200-line one that wastes context.
+- Include only non-obvious conventions, gotchas, and workflow commands. Skip information obvious from the code itself (e.g., "this is a TypeScript project" when `tsconfig.json` is present).
+- Target a concise 40-60 line document. A focused CLAUDE.md that loads every session is better than a 200-line one that wastes context.
 - Do NOT fabricate build commands. If you cannot detect them, use a placeholder. Wrong commands are worse than missing ones.
 - Do NOT skip the Code Style and Common Mistakes sections. These are the highest-value sections and should always be present, even as placeholders.
 

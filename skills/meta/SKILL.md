@@ -1,5 +1,6 @@
 ---
 description: Update the /essentials:sharpen skill with new resources or improvements
+when_to_use: When the user wants to improve the /essentials:sharpen skill with new patterns or knowledge
 argument-hint: <url-or-change-description>
 allowed-tools: Read, Write, Edit, Grep, Glob, WebFetch
 ---
