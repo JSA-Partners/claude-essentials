@@ -67,18 +67,18 @@ Every command accepts a full unit file path. You can also pass a partial name li
 
 | Skill | Purpose |
 | ----- | ------- |
-| `/essentials:discuss` | Explore a problem through discussion and research, then produce a prompt for `/essentials:story`. |
-| `/essentials:story` | Create user stories through agent collaboration. |
 | `/essentials:commit` | Generate commit messages matching project patterns. Defaults to conventional commits. |
 | `/essentials:decompose` | Decompose a plan or user story into single-commit implementation units. |
+| `/essentials:discuss` | Explore a problem through discussion and research, then produce a prompt for `/essentials:story`. |
 | `/essentials:document` | Capture learnings from implementation into project docs, memories, or CLAUDE.md. |
 | `/essentials:implement` | Implement one decomposed unit with idiomatic patterns and quality gates. |
 | `/essentials:init` | Generate a CLAUDE.md for the current project based on codebase analysis. |
-| `/essentials:meta` | Update the /essentials:sharpen skill with new resources. |
+| `/essentials:meta` | Update the `/essentials:sharpen` skill with new resources. |
 | `/essentials:playbook` | Inject behavioral plays and execution protocols. |
 | `/essentials:pr` | Create a GitHub PR matching project conventions. Requires `gh` CLI. |
 | `/essentials:review` | Review code with parallel specialized agents, adversarial verification, and human approval. |
 | `/essentials:sharpen` | Systematically improve skills and agents using proven patterns. |
+| `/essentials:story` | Create user stories through agent collaboration. |
 
 ### Agents
 
@@ -90,7 +90,7 @@ Every command accepts a full unit file path. You can also pass a partial name li
 | `go-idiom-reviewer` | Reviews Go code for idiomatic patterns, citing Effective Go. |
 | `python-idiom-reviewer` | Reviews Python code for idiomatic patterns, citing PEP standards. |
 | `scope-reviewer` | Detects scope creep by tracing implementations to user stories. |
-| `skeptic-reviewer` | Adversarial verification of other agents' findings. Eliminates false positives. |
+| `skeptic-reviewer` | Challenges other agents' findings adversarially. Eliminates false positives. |
 | `story-drafter` | Converts feature ideas into implementable user stories with acceptance criteria. |
 | `story-estimator` | Estimates story points using Fibonacci scale with codebase analysis. |
 | `svelte-idiom-reviewer` | Reviews Svelte 5/SvelteKit code for idiomatic patterns. |
